@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GoDragobrat — перевезення та відпочинок</title>
+  <meta name="description" content="GoDragobrat: трансфер на Драгобрат та відпочинок у Карпатах. Замовлення перевезення, проживання, тури." />
+  <style>
+    :root { --max: 1050px; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.5; }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 20px; }
+    .hero { border-radius: 18px; padding: 26px; background: #f4f6f8; }
+    .brand { display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px; }
+    .badge { font-size:12px; padding:4px 10px; border-radius:999px; background:#fff; border:1px solid #e6e8eb; }
+    h1 { margin: 12px 0 8px; font-size: clamp(28px, 4vw, 44px); line-height:1.1; }
+    .sub { margin:0; color:#4b5563; font-size: 16px; max-width: 70ch; }
+    .cta { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px;
+           padding:12px 14px; border-radius:12px; border:1px solid #e6e8eb;
+           background:#fff; text-decoration:none; font-weight:700; }
+    .btn.primary { background:#111827; color:#fff; border-color:#111827; }
+    .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px; margin-top: 18px; }
+    .card { grid-column: span 12; border:1px solid #e6e8eb; border-radius:16px; padding:16px; background:#fff; }
+    .card h2 { margin:0 0 8px; font-size: 20px; }
+    .card p { margin:0; color:#4b5563; }
+    .list { margin:10px 0 0; padding-left:18px; color:#374151; }
+    .kpi { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .pill { padding:8px 10px; border:1px solid #e6e8eb; border-radius:999px; background:#fafafa; font-weight:600; }
+    footer { margin: 26px 0 10px; color:#6b7280; font-size: 13px; }
+    nav { display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; color:#374151; }
+    nav a { text-decoration:none; border-bottom:1px dashed #cbd5e1; }
+    @media (min-width: 800px){
+      .card.span6 { grid-column: span 6; }
+      .card.span4 { grid-column: span 4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero" id="top">
+      <div class="brand">
+        <div style="font-size:18px;">🏔️ GoDragobrat</div>
+        <div class="badge">Перевезення • Відпочинок • Драгобрат</div>
+      </div>
+
+      <h1>Трансфер та відпочинок на Драгобраті</h1>
+      <p class="sub">
+        Організуємо комфортне перевезення до Драгобрату та допоможемо з проживанням.
+        Працюємо цілий рік: зима (лижний сезон) і літо (гори, трекінг, чан).
+      </p>
+
+      <div class="cta">
+        <!-- Заміни телефон на свій у форматі +380... -->
+        <a class="btn primary" href="tel:+380000000000">📞 Подзвонити</a>
+        <!-- Заміни нік/номер на свої -->
+        <a class="btn" href="https://t.me/USERNAME" target="_blank" rel="noopener">💬 Telegram</a>
+        <a class="btn" href="viber://chat?number=%2B380000000000">💜 Viber</a>
+        <a class="btn" href="https://wa.me/380000000000" target="_blank" rel="noopener">🟢 WhatsApp</a>
+      </div>
+
+      <nav>
+        <a href="#transfer">Перевезення</a>
+        <a href="#rest">Відпочинок</a>
+        <a href="#gallery">Галерея</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+
+      <div class="kpi">
+        <div class="pill">🚙 4×4 до Драгобрату</div>
+        <div class="pill">🚌 Групові виїзди</div>
+        <div class="pill">🏡 Підбір проживання</div>
+        <div class="pill">❄️ Зима / 🌿 Літо</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="card span6" id="transfer">
+        <h2>🚐 Перевезення</h2>
+        <p>Трансфер до Драгобрату з популярних міст. Напиши — підберемо найкращий варіант.</p>
+        <ul class="list">
+          <li>Львів → Ясіня → Драгобрат</li>
+          <li>Івано-Франківськ → Ясіня → Драгобрат</li>
+          <li>Ужгород / Мукачево → Ясіня → Драгобрат</li>
+          <li>Доставка 4×4 від Ясіні до баз</li>
+        </ul>
+      </section>
+
+      <section class="card span6" id="rest">
+        <h2>🏡 Відпочинок</h2>
+        <p>Допоможемо з проживанням і програмою відпочинку: лижі, чан, сауна, екскурсії.</p>
+        <ul class="list">
+          <li>Котеджі / готелі / садиби</li>
+          <li>Чани, сауна, вечеря</li>
+          <li>Гірські маршрути та фототочки</li>
+          <li>Прокат спорядження (за домовленістю)</li>
+        </ul>
+      </section>
+
+      <section class="card span4" id="gallery">
+        <h2>📸 Галерея</h2>
+        <p>Поки що блок-заглушка. Далі додамо фото Драгобрату та вашого транспорту.</p>
+        <ul class="list">
+          <li>Зима: схили, підйомники</li>
+          <li>Літо: панорами, трекінг</li>
+          <li>Дорога/4×4</li>
+        </ul>
+      </section>
+
+      <section class="card span4">
+        <h2>💰 Ціни</h2>
+        <p>Можемо показати “від … грн” або зробити таблицю. Зараз — за запитом.</p>
+        <ul class="list">
+          <li>Груповий трансфер — за місце</li>
+          <li>Індивідуальний — за авто</li>
+          <li>4×4 Ясіня → Драгобрат</li>
+        </ul>
+      </section>
+
+      <section class="card span4" id="contacts">
+        <h2>📞 Контакти</h2>
+        <p>
+          Телефон: <b>+380 00 000 00 00</b><br/>
+          Telegram: <b>@USERNAME</b><br/>
+          Працюємо щодня.
+        </p>
+        <p style="margin-top:10px;">
+          <a class="btn primary" href="#top">⬆️ На початок</a>
+        </p>
+      </section>
+    </div>
+
+    <footer>
+      © <span id="y"></span> GoDragobrat. Всі права захищені.
+      <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+    </footer>
+  </div>
+</body>
+</html>
