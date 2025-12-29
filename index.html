@@ -2,23 +2,19 @@
 <html lang="uk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GoDragobrat — трансфер і відпочинок</title>
 
-<meta name="description" content="Трансфер 4×4 на Драгобрат, проживання, тури, відпочинок у Карпатах">
-<meta name="theme-color" content="#0b1220">
-
 <style>
-/* ================== BASE ================== */
 :root{
-  --max:1100px;
   --bg:#0b1220;
-  --text:#eaf0ff;
-  --muted:#aab4c8;
+  --text:#eef2ff;
+  --muted:#cfd6e6;
   --line:rgba(255,255,255,.14);
-  --radius:18px;
   --btn:#ffffff;
   --btnText:#0b1220;
+  --radius:18px;
+  --max:1200px;
 }
 
 *{box-sizing:border-box}
@@ -27,136 +23,129 @@ body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   background:linear-gradient(180deg,#0b1220,#070b14);
   color:var(--text);
-  line-height:1.55;
 }
-a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--max);margin:0 auto;padding:18px}
 
-/* ================== TOP ================== */
+.wrap{max-width:var(--max);margin:auto;padding:18px}
+
 .topbar{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:14px;
 }
+
 .brand{display:flex;gap:12px;align-items:center}
 .logo{
-  width:44px;height:44px;border-radius:12px;
-  overflow:hidden;border:1px solid var(--line);
+  width:44px;height:44px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--line);
 }
 .logo img{width:100%;height:100%;object-fit:cover}
-.badge{
-  font-size:12px;color:var(--muted);
-  border:1px solid var(--line);
-  padding:6px 10px;border-radius:999px;
-  background:rgba(255,255,255,.06)
-}
-.nav{display:flex;gap:14px;flex-wrap:wrap}
-.nav a{color:var(--muted);border-bottom:1px dashed rgba(255,255,255,.3)}
 
-/* ================== HERO ================== */
+.nav{display:flex;gap:14px;flex-wrap:wrap}
+.nav a{color:var(--muted);text-decoration:none}
+
 .hero{
   margin-top:14px;
-  min-height:460px;
   border-radius:18px;
   overflow:hidden;
-  position:relative;
-
+  min-height:460px;
   background:
     linear-gradient(
       to right,
-      rgba(11,18,32,.72),
-      rgba(11,18,32,.42)
+      rgba(11,18,32,.75),
+      rgba(11,18,32,.55)
     ),
     url("assets/bg.jpg") center/cover no-repeat;
-
-  box-shadow:0 25px 50px rgba(0,0,0,.55);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
 }
 
 .hero-inner{
   display:grid;
-  grid-template-columns:1.35fr .65fr;
-  gap:16px;
-  padding:24px;
+  grid-template-columns:1.3fr .7fr;
+  gap:20px;
+  padding:28px;
 }
 
-@media (max-width:860px){
+@media(max-width:900px){
   .hero-inner{grid-template-columns:1fr}
 }
 
 .h-title{
-  margin:0;
   font-size:clamp(28px,4vw,46px);
   line-height:1.05;
-  color:#fff;
+  margin:0;
 }
+
 .h-sub{
-  margin:12px 0 0;
+  margin-top:12px;
   max-width:70ch;
-  color:#cfd6e6;
-}
-
-.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-
-.btn{
-  padding:12px 14px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.08);
-  font-weight:800;
-}
-.btn.primary{
-  background:#fff;
-  color:#0b1220;
-  border-color:transparent;
-}
-.btn.ghost{background:transparent}
-
-.hero-card{
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:rgba(0,0,0,.22);
-  padding:14px;
-}
-
-.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.kpi{
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:10px;
-  background:rgba(255,255,255,.06)
-}
-.kpi b{display:block;font-size:13px}
-.kpi span{font-size:12px;color:var(--muted)}
-
-.notice{
-  margin-top:10px;
-  border-left:4px solid rgba(255,255,255,.4);
-  padding:10px;
-  border-radius:14px;
-  background:rgba(255,255,255,.06);
   color:var(--muted);
 }
 
-/* ================== HELPERS ================== */
-.section{margin-top:26px}
-.hidden{display:none!important}
-[data-show="0"]{display:none!important}
+.cta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+
+.btn{
+  padding:12px 16px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.08);
+  color:white;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.btn.primary{
+  background:white;
+  color:#0b1220;
+  border:none;
+}
+
+.hero-card{
+  background:rgba(0,0,0,.35);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+}
+
+.kpis{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.kpi{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px;
+  background:rgba(255,255,255,.06);
+}
+
+.notice{
+  margin-top:10px;
+  font-size:13px;
+  color:var(--muted);
+}
 </style>
 </head>
 
 <body>
 <div class="wrap">
 
-<!-- TOP -->
 <div class="topbar">
   <div class="brand">
     <div class="logo">
       <img src="assets/logo.jpg" alt="GoDragobrat">
     </div>
     <div>
-      <b>GoDragobrat</b>
-      <div class="badge">Трансфер • Проживання • Драгобрат</div>
+      <b>GoDragobrat</b><br>
+      <small style="color:#9fb3ff">Трансфер • Проживання • Відпочинок</small>
     </div>
   </div>
 
@@ -168,18 +157,16 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- HERO -->
-<section class="hero" id="top">
+<section class="hero">
   <div class="hero-inner">
     <div>
-      <h2 class="h-title">
-        Трансфер та відпочинок на Драгобраті — швидко й надійно
-      </h2>
+      <h1 class="h-title">
+        Трансфер та відпочинок<br>на Драгобраті
+      </h1>
 
       <p class="h-sub">
-        Організовуємо трансфер до Драгобрату (включно з 4×4 від Ясіні),
+        Організовуємо трансфер (включно з 4×4 від Ясіні),
         підбираємо проживання та допомагаємо з відпочинком.
-        <b>Зима</b> — лижі, <b>літо</b> — гори й панорами.
       </p>
 
       <div class="cta">
@@ -190,25 +177,19 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
 
-    <aside class="hero-card">
+    <div class="hero-card">
       <b>✅ Що ти отримуєш</b>
       <div class="kpis">
-        <div class="kpi"><b>🚙 4×4</b><span>від Ясіні</span></div>
-        <div class="kpi"><b>👥 Групи</b><span>та індивідуально</span></div>
-        <div class="kpi"><b>🏡 Проживання</b><span>готелі, котеджі</span></div>
-        <div class="kpi"><b>⚡ Звʼязок</b><span>TG • Viber • WA</span></div>
+        <div class="kpi">🚙 4×4 до баз</div>
+        <div class="kpi">🚌 Групи / індивідуально</div>
+        <div class="kpi">🏡 Проживання</div>
+        <div class="kpi">⚡ Швидкий звʼязок</div>
       </div>
       <div class="notice">
-        Якщо погода складна — рекомендуємо 4×4
+        Якщо погода складна — рекомендуємо 4×4.
       </div>
-    </aside>
+    </div>
   </div>
-</section>
-
-<!-- CONTACTS -->
-<section class="section" id="contacts">
-  <h2>📞 Контакти</h2>
-  <p><b>+380 96 605 64 33</b></p>
 </section>
 
 </div>
