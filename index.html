@@ -3,136 +3,503 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GoDragobrat — перевезення та відпочинок</title>
-  <meta name="description" content="GoDragobrat: трансфер на Драгобрат та відпочинок у Карпатах. Замовлення перевезення, проживання, тури." />
+  <title>GoDragobrat — трансфер і відпочинок на Драгобраті</title>
+  <meta name="description" content="GoDragobrat: трансфер 4×4 на Драгобрат, проживання, тури, відпочинок у Карпатах. Швидко, безпечно, зручно." />
+  <meta name="theme-color" content="#0b1220" />
+
   <style>
-    :root { --max: 1050px; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.5; }
-    a { color: inherit; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 20px; }
-    .hero { border-radius: 18px; padding: 26px; background: #f4f6f8; }
-    .brand { display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px; }
-    .badge { font-size:12px; padding:4px 10px; border-radius:999px; background:#fff; border:1px solid #e6e8eb; }
-    h1 { margin: 12px 0 8px; font-size: clamp(28px, 4vw, 44px); line-height:1.1; }
-    .sub { margin:0; color:#4b5563; font-size: 16px; max-width: 70ch; }
-    .cta { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px;
-           padding:12px 14px; border-radius:12px; border:1px solid #e6e8eb;
-           background:#fff; text-decoration:none; font-weight:700; }
-    .btn.primary { background:#111827; color:#fff; border-color:#111827; }
-    .grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px; margin-top: 18px; }
-    .card { grid-column: span 12; border:1px solid #e6e8eb; border-radius:16px; padding:16px; background:#fff; }
-    .card h2 { margin:0 0 8px; font-size: 20px; }
-    .card p { margin:0; color:#4b5563; }
-    .list { margin:10px 0 0; padding-left:18px; color:#374151; }
-    .kpi { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .pill { padding:8px 10px; border:1px solid #e6e8eb; border-radius:999px; background:#fafafa; font-weight:600; }
-    footer { margin: 26px 0 10px; color:#6b7280; font-size: 13px; }
-    nav { display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; color:#374151; }
-    nav a { text-decoration:none; border-bottom:1px dashed #cbd5e1; }
-    @media (min-width: 800px){
-      .card.span6 { grid-column: span 6; }
-      .card.span4 { grid-column: span 4; }
+    :root{
+      --bg:#0b1220; --bg2:#0f1930; --card:#0f1b33; --text:#eaf0ff; --muted:#b8c4e6;
+      --line:rgba(255,255,255,.10);
+      --btn:#ffffff; --btnText:#0b1220;
+      --max:1120px;
+      --radius:18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.28);
     }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#070b14);color:var(--text);line-height:1.55}
+    a{color:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:18px}
+    .topbar{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:8px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.08);
+      display:grid;place-items:center;overflow:hidden;border:1px solid var(--line)
+    }
+    .logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .brand h1{margin:0;font-size:16px;letter-spacing:.2px}
+    .badge{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06)}
+    .nav{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{text-decoration:none;color:var(--muted);border-bottom:1px dashed rgba(255,255,255,.28)}
+    .hero{
+      margin-top:10px;border:1px solid var(--line);border-radius:var(--radius);
+      background:radial-gradient(1200px 500px at 20% -10%, rgba(86,178,255,.25), transparent 60%),
+                 radial-gradient(900px 500px at 100% 0%, rgba(150,255,200,.18), transparent 55%),
+                 linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .hero-inner{display:grid;grid-template-columns: 1.35fr .65fr;gap:16px;padding:22px}
+    @media (max-width: 860px){.hero-inner{grid-template-columns:1fr}}
+    .h-title{margin:0;font-size:clamp(28px,4vw,46px);line-height:1.05}
+    .h-sub{margin:10px 0 0;color:var(--muted);max-width:70ch}
+    .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      padding:12px 14px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.06);text-decoration:none;font-weight:800
+    }
+    .btn.primary{background:var(--btn);color:var(--btnText);border-color:transparent}
+    .btn.ghost{background:transparent}
+    .mini{color:var(--muted);font-size:13px;margin-top:10px}
+    .hero-card{
+      border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.16);
+      padding:14px;display:flex;flex-direction:column;gap:10px
+    }
+    .hero-card h3{margin:0;font-size:15px}
+    .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .kpi{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(255,255,255,.05)}
+    .kpi b{display:block;font-size:13px}
+    .kpi span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+    .section{margin-top:18px}
+    .section h2{margin:0 0 10px;font-size:22px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .card{
+      grid-column:span 12;border:1px solid var(--line);border-radius:var(--radius);
+      background:rgba(255,255,255,.05);padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.18)
+    }
+    @media (min-width: 900px){
+      .span6{grid-column:span 6}
+      .span4{grid-column:span 4}
+      .span8{grid-column:span 8}
+    }
+    .muted{color:var(--muted)}
+    .list{margin:10px 0 0;padding-left:18px;color:var(--text)}
+    .list li{margin:6px 0;color:var(--muted)}
+    .tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .tag{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.04);color:var(--muted)}
+    .pricebox{display:grid;gap:10px;margin-top:10px}
+    .row{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}
+    .row b{font-size:13px}
+    .row span{color:var(--muted);font-size:13px}
+    .gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;margin-top:10px}
+    .ph{
+      grid-column:span 12;border-radius:16px;border:1px solid var(--line);
+      background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      min-height:140px;display:grid;place-items:center;color:rgba(255,255,255,.65);font-weight:700
+    }
+    @media (min-width: 900px){
+      .ph.span4{grid-column:span 4}
+      .ph.span6{grid-column:span 6}
+      .ph.span8{grid-column:span 8}
+    }
+    details{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}
+    details + details{margin-top:10px}
+    summary{cursor:pointer;font-weight:800}
+    footer{margin:26px 0 10px;color:var(--muted);font-size:13px}
+    .notice{border-left:4px solid rgba(255,255,255,.35);padding:10px 12px;background:rgba(255,255,255,.05);border-radius:14px;color:var(--muted)}
+    .hidden{display:none !important}
+
+    /* Авто-приховування секцій через data-show="0" */
+    [data-show="0"]{display:none !important}
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <div class="hero" id="top">
+    <!-- TOP BAR -->
+    <div class="topbar">
       <div class="brand">
-        <div style="font-size:18px;">🏔️ GoDragobrat</div>
-        <div class="badge">Перевезення • Відпочинок • Драгобрат</div>
+        <div class="logo" title="Логотип">
+          <!-- 1) Завантаж логотип у репо в папку /assets/logo.png
+               2) Потім він з'явиться тут -->
+          <img src="assets/logo.png" alt="GoDragobrat logo" onerror="this.style.display='none'; this.parentElement.textContent='🏔️';" />
+        </div>
+        <div>
+          <h1>GoDragobrat</h1>
+          <div class="badge">Трансфер • Проживання • Відпочинок • Драгобрат</div>
+        </div>
       </div>
 
-      <h1>Трансфер та відпочинок на Драгобраті</h1>
-      <p class="sub">
-        Організуємо комфортне перевезення до Драгобрату та допоможемо з проживанням.
-        Працюємо цілий рік: зима (лижний сезон) і літо (гори, трекінг, чан).
-      </p>
-
-      <div class="cta">
-        <!-- Заміни телефон на свій у форматі +380... -->
-        <a class="btn primary" href="tel:+380000000000">📞 Подзвонити</a>
-        <!-- Заміни нік/номер на свої -->
-        <a class="btn" href="https://t.me/USERNAME" target="_blank" rel="noopener">💬 Telegram</a>
-        <a class="btn" href="viber://chat?number=%2B380000000000">💜 Viber</a>
-        <a class="btn" href="https://wa.me/380000000000" target="_blank" rel="noopener">🟢 WhatsApp</a>
-      </div>
-
-      <nav>
+      <div class="nav">
         <a href="#transfer">Перевезення</a>
-        <a href="#rest">Відпочинок</a>
-        <a href="#gallery">Галерея</a>
+        <a href="#stay">Проживання</a>
+        <a href="#tours">Тури</a>
+        <a href="#prices">Ціни</a>
+        <a href="#gallery">Фото</a>
+        <a href="#reviews">Відгуки</a>
+        <a href="#faq">FAQ</a>
         <a href="#contacts">Контакти</a>
-      </nav>
-
-      <div class="kpi">
-        <div class="pill">🚙 4×4 до Драгобрату</div>
-        <div class="pill">🚌 Групові виїзди</div>
-        <div class="pill">🏡 Підбір проживання</div>
-        <div class="pill">❄️ Зима / 🌿 Літо</div>
       </div>
     </div>
 
-    <div class="grid">
-      <section class="card span6" id="transfer">
-        <h2>🚐 Перевезення</h2>
-        <p>Трансфер до Драгобрату з популярних міст. Напиши — підберемо найкращий варіант.</p>
-        <ul class="list">
-          <li>Львів → Ясіня → Драгобрат</li>
-          <li>Івано-Франківськ → Ясіня → Драгобрат</li>
-          <li>Ужгород / Мукачево → Ясіня → Драгобрат</li>
-          <li>Доставка 4×4 від Ясіні до баз</li>
-        </ul>
-      </section>
+    <!-- HERO -->
+    <section class="hero" id="top" data-show="1">
+      <div class="hero-inner">
+        <div>
+          <h2 class="h-title">Трансфер та відпочинок на Драгобраті — швидко й надійно</h2>
+          <p class="h-sub">
+            Організовуємо перевезення до Драгобрату (включно з 4×4 від Ясіні), підбираємо проживання та допомагаємо з відпочинком.
+            Працюємо цілий рік: <b>зима</b> — лижі та сноуборд, <b>літо</b> — гори, трекінг, панорами.
+          </p>
 
-      <section class="card span6" id="rest">
-        <h2>🏡 Відпочинок</h2>
-        <p>Допоможемо з проживанням і програмою відпочинку: лижі, чан, сауна, екскурсії.</p>
-        <ul class="list">
-          <li>Котеджі / готелі / садиби</li>
-          <li>Чани, сауна, вечеря</li>
-          <li>Гірські маршрути та фототочки</li>
-          <li>Прокат спорядження (за домовленістю)</li>
-        </ul>
-      </section>
+          <div class="cta">
+            <a class="btn primary" href="tel:+380966056433">📞 Подзвонити</a>
+            <a class="btn" href="https://t.me/+380966056433" target="_blank" rel="noopener">💬 Telegram</a>
+            <a class="btn" href="viber://chat?number=%2B380966056433">💜 Viber</a>
+            <a class="btn" href="https://wa.me/380966056433" target="_blank" rel="noopener">🟢 WhatsApp</a>
+            <a class="btn ghost" href="#request">📝 Швидка заявка</a>
+          </div>
 
-      <section class="card span4" id="gallery">
-        <h2>📸 Галерея</h2>
-        <p>Поки що блок-заглушка. Далі додамо фото Драгобрату та вашого транспорту.</p>
-        <ul class="list">
-          <li>Зима: схили, підйомники</li>
-          <li>Літо: панорами, трекінг</li>
-          <li>Дорога/4×4</li>
-        </ul>
-      </section>
+          <div class="mini">📍 Драгобрат • Ясіня • Закарпаття • Карпати</div>
+        </div>
 
-      <section class="card span4">
-        <h2>💰 Ціни</h2>
-        <p>Можемо показати “від … грн” або зробити таблицю. Зараз — за запитом.</p>
-        <ul class="list">
-          <li>Груповий трансфер — за місце</li>
-          <li>Індивідуальний — за авто</li>
-          <li>4×4 Ясіня → Драгобрат</li>
-        </ul>
-      </section>
+        <aside class="hero-card">
+          <h3>✅ Що ти отримуєш</h3>
+          <div class="kpis">
+            <div class="kpi"><b>🚙 4×4 до баз</b><span>від Ясіні до Драгобрату</span></div>
+            <div class="kpi"><b>🚌 Групи & індивідуально</b><span>місця / авто</span></div>
+            <div class="kpi"><b>🏡 Проживання</b><span>котеджі, готелі, садиби</span></div>
+            <div class="kpi"><b>🕒 Швидкий зв'язок</b><span>Телефон, TG, Viber, WA</span></div>
+          </div>
+          <div class="notice">
+            <b>Порада:</b> якщо дорога/погода складні — обирай 4×4. Напиши нам і ми підкажемо найкращий варіант під твій час.
+          </div>
+        </aside>
+      </div>
+    </section>
 
-      <section class="card span4" id="contacts">
-        <h2>📞 Контакти</h2>
-        <p>
-          Телефон: <b>+380 00 000 00 00</b><br/>
-          Telegram: <b>@USERNAME</b><br/>
-          Працюємо щодня.
+    <!-- TRANSFER -->
+    <section class="section" id="transfer" data-show="1">
+      <h2>🚐 Перевезення на Драгобрат</h2>
+      <div class="grid">
+        <div class="card span8">
+          <p class="muted">
+            Трансфери з популярних напрямків. Можемо організувати збір групи, індивідуальний виїзд або трансфер “під ключ”
+            (місто → Ясіня → 4×4 → база).
+          </p>
+          <ul class="list">
+            <li><b>Львів → Ясіня → Драгобрат</b> (групові/індивідуальні)</li>
+            <li><b>Івано-Франківськ → Ясіня → Драгобрат</b></li>
+            <li><b>Ужгород / Мукачево → Ясіня → Драгобрат</b></li>
+            <li><b>Яремче / Буковель → Ясіня</b> (за домовленістю)</li>
+            <li><b>4×4 від Ясіні</b> — доставка до конкретної бази</li>
+          </ul>
+          <div class="tagrow">
+            <div class="tag">Безпечні маршрути</div>
+            <div class="tag">Пунктуально</div>
+            <div class="tag">Досвід у сезон</div>
+            <div class="tag">Підбір авто під погоду</div>
+          </div>
+        </div>
+
+        <div class="card span4">
+          <h3 style="margin:0 0 8px;">🧭 Як це працює</h3>
+          <ol class="list" style="padding-left:18px;">
+            <li>Пишеш дату, місто, кількість людей</li>
+            <li>Ми підтверджуємо час і варіант авто</li>
+            <li>Зустріч у точці збору</li>
+            <li>Доставка до Ясіні / Драгобрату</li>
+          </ol>
+          <div class="notice" style="margin-top:10px;">
+            <b>Швидка заявка:</b> натисни “Швидка заявка” нижче і заповни 20 секунд.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STAY -->
+    <section class="section" id="stay" data-show="1">
+      <h2>🏡 Проживання</h2>
+      <div class="grid">
+        <div class="card span6">
+          <h3 style="margin:0 0 8px;">Котеджі / готелі / садиби</h3>
+          <p class="muted">
+            Підбираємо проживання під твій бюджет та формат: компанія друзів, сімʼя, пара або група.
+          </p>
+          <ul class="list">
+            <li>Розміщення ближче до підйомників або “тихо”</li>
+            <li>Сніданки/харчування (за домовленістю)</li>
+            <li>Чани/сауна поруч</li>
+            <li>Поради по спорядженню та сезонності</li>
+          </ul>
+        </div>
+
+        <div class="card span6">
+          <h3 style="margin:0 0 8px;">Що написати нам</h3>
+          <ul class="list">
+            <li>Дати заїзду/виїзду</li>
+            <li>Кількість людей</li>
+            <li>Бюджет “до … грн” або “середній/комфорт”</li>
+            <li>Побажання: чан/сауна, харчування, трансфер 4×4</li>
+          </ul>
+          <div class="tagrow">
+            <div class="tag">Підбір за 10–20 хв</div>
+            <div class="tag">Реальні варіанти</div>
+            <div class="tag">Поради по сезону</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOURS -->
+    <section class="section" id="tours" data-show="1">
+      <h2>🏔 Тури та активності</h2>
+      <div class="grid">
+        <div class="card span4">
+          <h3 style="margin:0 0 8px;">❄️ Зимовий пакет</h3>
+          <p class="muted">Лижі/сноуборд, підйомники, прокат, вечірній відпочинок.</p>
+          <ul class="list">
+            <li>Поради по трасах</li>
+            <li>Прокат (за домовленістю)</li>
+            <li>Чан/сауна ввечері</li>
+          </ul>
+        </div>
+        <div class="card span4">
+          <h3 style="margin:0 0 8px;">🌿 Літній пакет</h3>
+          <p class="muted">Панорами, трекінг, фото-локації, легкі маршрути для всіх.</p>
+          <ul class="list">
+            <li>Маршрути під ваш рівень</li>
+            <li>Фотозупинки</li>
+            <li>Пікнік/чай у горах</li>
+          </ul>
+        </div>
+        <div class="card span4">
+          <h3 style="margin:0 0 8px;">🔥 Релакс</h3>
+          <p class="muted">Чани, сауна, вечеря, компанія — для повного перезавантаження.</p>
+          <ul class="list">
+            <li>Чан під зорями</li>
+            <li>Сауна</li>
+            <li>Дегустації (за бажанням)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICES -->
+    <section class="section" id="prices" data-show="1">
+      <h2>💰 Ціни</h2>
+      <div class="grid">
+        <div class="card span8">
+          <p class="muted">
+            Нижче — приклади. Точну ціну підтверджуємо після дати, міста і кількості людей (сезон, погода, доступність авто).
+          </p>
+          <div class="pricebox">
+            <div class="row"><b>Груповий трансфер</b><span>за місце • уточнюй у повідомленні</span></div>
+            <div class="row"><b>Індивідуальний трансфер</b><span>за авто • залежить від міста</span></div>
+            <div class="row"><b>4×4 Ясіня → Драгобрат</b><span>залежить від бази та умов</span></div>
+            <div class="row"><b>Підбір проживання</b><span>безкоштовно (за запитом)</span></div>
+          </div>
+          <div class="notice" style="margin-top:10px;">
+            <b>Хочеш “точну ціну”?</b> Натисни “Швидка заявка” і напиши: дата + місто + людей + чи потрібен 4×4.
+          </div>
+        </div>
+
+        <div class="card span4">
+          <h3 style="margin:0 0 8px;">⚙️ Можеш приховати цей блок</h3>
+          <p class="muted">
+            Якщо ціни ще не актуальні — постав для секції <code>data-show="0"</code>. Вона зникне з сайту.
+          </p>
+          <div class="tagrow">
+            <div class="tag">Легко редагувати</div>
+            <div class="tag">Без програмування</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUEST FORM -->
+    <section class="section" id="request" data-show="1">
+      <h2>📝 Швидка заявка (20 секунд)</h2>
+      <div class="grid">
+        <div class="card span8">
+          <p class="muted">
+            Це проста форма-чернетка. Вона відкриває готове повідомлення у Telegram / Viber / WhatsApp.
+            (Без серверів, без складнощів.)
+          </p>
+
+          <div class="grid" style="gap:10px">
+            <div class="card" style="background:rgba(0,0,0,.14);box-shadow:none;border-radius:14px;grid-column:span 12">
+              <label style="display:block;font-weight:800;margin-bottom:6px">Що потрібно?</label>
+              <input id="f_need" placeholder="Напр: трансфер Львів → Драгобрат + проживання"
+                     style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text)" />
+            </div>
+
+            <div class="card" style="background:rgba(0,0,0,.14);box-shadow:none;border-radius:14px;grid-column:span 12">
+              <label style="display:block;font-weight:800;margin-bottom:6px">Дата / дати</label>
+              <input id="f_date" placeholder="Напр: 10–12 січня"
+                     style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text)" />
+            </div>
+
+            <div class="card" style="background:rgba(0,0,0,.14);box-shadow:none;border-radius:14px;grid-column:span 12">
+              <label style="display:block;font-weight:800;margin-bottom:6px">Кількість людей</label>
+              <input id="f_people" placeholder="Напр: 4"
+                     style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text)" />
+            </div>
+          </div>
+
+          <div class="cta" style="margin-top:12px">
+            <a class="btn primary" id="send_tg" href="#">Надіслати в Telegram</a>
+            <a class="btn" id="send_vb" href="#">Надіслати у Viber</a>
+            <a class="btn" id="send_wa" href="#" target="_blank" rel="noopener">Надіслати у WhatsApp</a>
+          </div>
+
+          <p class="mini">Після натискання відкриється месенджер з готовим текстом — ти просто відправляєш.</p>
+        </div>
+
+        <div class="card span4">
+          <h3 style="margin:0 0 8px;">🔒 Безпечно і просто</h3>
+          <p class="muted">Форма не зберігає дані — вона лише генерує повідомлення для месенджера.</p>
+          <div class="notice">Якщо форма тимчасово не потрібна — постав <code>data-show="0"</code> для секції “Швидка заявка”.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section" id="gallery" data-show="1">
+      <h2>📸 Фото Драгобрату</h2>
+      <div class="card">
+        <p class="muted">
+          Тут будуть твої фото. Поки — “плейсхолдери”.
+          Коли ти завантажиш зображення в папку <code>assets/photos/</code>, я підкажу як замінити ці блоки на реальні фото.
         </p>
-        <p style="margin-top:10px;">
-          <a class="btn primary" href="#top">⬆️ На початок</a>
-        </p>
-      </section>
-    </div>
+        <div class="gallery">
+          <div class="ph span6">Фото 1 (зима)</div>
+          <div class="ph span6">Фото 2 (трансфер/4×4)</div>
+          <div class="ph span4">Фото 3</div>
+          <div class="ph span4">Фото 4</div>
+          <div class="ph span4">Фото 5</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section" id="reviews" data-show="1">
+      <h2>⭐ Відгуки</h2>
+      <div class="grid">
+        <div class="card span4">
+          <b>“Доїхали швидко і безпечно”</b>
+          <p class="muted" style="margin:8px 0 0">Пунктуально забрали, дорога пройшла супер. 4×4 до бази — топ!</p>
+          <div class="mini">— Ім’я, місто</div>
+        </div>
+        <div class="card span4">
+          <b>“Підібрали класне проживання”</b>
+          <p class="muted" style="margin:8px 0 0">Знайшли варіант за бюджетом, ще й з чаном поруч.</p>
+          <div class="mini">— Ім’я, місто</div>
+        </div>
+        <div class="card span4">
+          <b>“Зручна комунікація”</b>
+          <p class="muted" style="margin:8px 0 0">Писали в Telegram — відповіли одразу, все по ділу.</p>
+          <div class="mini">— Ім’я, місто</div>
+        </div>
+      </div>
+      <div class="notice" style="margin-top:10px;">
+        Коли будуть реальні відгуки — просто заміниш текст. Якщо блоку не треба — <code>data-show="0"</code>.
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq" data-show="1">
+      <h2>❓ FAQ</h2>
+      <div class="card">
+        <details open>
+          <summary>Куди саме привозите на Драгобрат?</summary>
+          <div class="muted" style="margin-top:8px;">До Ясіні їдемо звичайним авто/мікроавтобусом, далі 4×4 — до конкретної бази (по домовленості).</div>
+        </details>
+        <details>
+          <summary>Чи є групові виїзди?</summary>
+          <div class="muted" style="margin-top:8px;">Так, часто формуємо групи. Напиши дату і місто — підкажемо варіанти.</div>
+        </details>
+        <details>
+          <summary>Як швидко підтверджуєте?</summary>
+          <div class="muted" style="margin-top:8px;">Зазвичай дуже швидко в Telegram/Viber/WhatsApp. У сезон краще писати завчасно.</div>
+        </details>
+        <details>
+          <summary>Чи допомагаєте з проживанням?</summary>
+          <div class="muted" style="margin-top:8px;">Так. Пишеш дати + людей + бюджет — надсилаємо варіанти.</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="section" id="contacts" data-show="1">
+      <h2>📞 Контакти</h2>
+      <div class="grid">
+        <div class="card span6">
+          <p class="muted" style="margin:0">
+            Телефон / Telegram / Viber / WhatsApp:<br/>
+            <b style="font-size:18px;color:var(--text)">+380 96 605 64 33</b>
+          </p>
+          <div class="cta" style="margin-top:12px">
+            <a class="btn primary" href="tel:+380966056433">📞 Подзвонити</a>
+            <a class="btn" href="https://t.me/+380966056433" target="_blank" rel="noopener">💬 Telegram</a>
+            <a class="btn" href="viber://chat?number=%2B380966056433">💜 Viber</a>
+            <a class="btn" href="https://wa.me/380966056433" target="_blank" rel="noopener">🟢 WhatsApp</a>
+          </div>
+          <p class="mini">Працюємо щодня. В сезон краще писати/дзвонити завчасно.</p>
+        </div>
+
+        <div class="card span6">
+          <h3 style="margin:0 0 8px;">📍 Географія</h3>
+          <p class="muted" style="margin:0">Львів • Івано-Франківськ • Ужгород/Мукачево • Ясіня • Драгобрат</p>
+          <div class="notice" style="margin-top:10px;">
+            Якщо хочеш — додамо карту Google (вставка iframe) або кнопку “Відкрити маршрут”.
+          </div>
+          <a class="btn ghost" href="#top" style="margin-top:10px">⬆️ На початок</a>
+        </div>
+      </div>
+    </section>
 
     <footer>
       © <span id="y"></span> GoDragobrat. Всі права захищені.
-      <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+      <script>
+        document.getElementById('y').textContent = new Date().getFullYear();
+
+        // Генератор повідомлення для швидкої заявки
+        function makeMsg(){
+          const need = (document.getElementById('f_need')?.value || '').trim();
+          const date = (document.getElementById('f_date')?.value || '').trim();
+          const people = (document.getElementById('f_people')?.value || '').trim();
+          const lines = [
+            "Привіт! Хочу замовити GoDragobrat.",
+            need ? ("📌 Потрібно: " + need) : null,
+            date ? ("📅 Дата: " + date) : null,
+            people ? ("👥 Людей: " + people) : null,
+            "Мій контакт: +380966056433"
+          ].filter(Boolean);
+          return lines.join("\n");
+        }
+
+        function enc(s){ return encodeURIComponent(s); }
+
+        const tg = document.getElementById('send_tg');
+        const vb = document.getElementById('send_vb');
+        const wa = document.getElementById('send_wa');
+
+        if(tg) tg.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const msg = makeMsg();
+          // Telegram: відкриваємо чат по номеру; текст користувач вставить (або відправить вручну).
+          // Найстабільніше — відкривати чат, бо автопідстановка тексту по номеру може працювати по-різному.
+          window.open("https://t.me/+380966056433", "_blank");
+          alert("Скопіюй і відправ у Telegram:\n\n" + msg);
+        });
+
+        if(vb) vb.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const msg = makeMsg();
+          // Viber deep link до чату + підказка з текстом
+          window.location.href = "viber://chat?number=%2B380966056433";
+          setTimeout(()=>alert("Скопіюй і відправ у Viber:\n\n" + msg), 300);
+        });
+
+        if(wa) wa.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const msg = makeMsg();
+          // WhatsApp підтримує текст у link
+          window.open("https://wa.me/380966056433?text=" + enc(msg), "_blank");
+        });
+      </script>
     </footer>
   </div>
 </body>
