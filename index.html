@@ -8,6 +8,33 @@
   <meta name="theme-color" content="#0b1220" />
 
   <style>
+    /* Mobile sticky contact button */
+.mobile-contact{
+  display:none;
+}
+
+@media (max-width: 768px){
+  .mobile-contact{
+    display:block;
+    position:fixed;
+    left:16px;
+    right:16px;
+    bottom:16px;
+    z-index:9999;
+  }
+
+  .mobile-contact a{
+    display:block;
+    text-align:center;
+    padding:14px 18px;
+    border-radius:16px;
+    background:#25D366;
+    color:#0b1220;
+    font-weight:700;
+    text-decoration:none;
+    box-shadow: 0 12px 30px rgba(37,211,102,.45);
+  }
+}
     :root{
       --bg:#0b1220; --bg2:#0f1930; --card:#0f1b33; --text:#eaf0ff; --muted:#b8c4e6;
       --line:rgba(255,255,255,.10);
@@ -548,5 +575,11 @@
       </script>
     </footer>
   </div>
+  <!-- Mobile sticky contact button -->
+<div class="mobile-contact">
+  <a href="https://wa.me/380966056433" target="_blank" rel="noopener">
+    💬 Написати в WhatsApp
+  </a>
+</div>
 </body>
 </html>
