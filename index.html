@@ -21,6 +21,34 @@
   <meta name="theme-color" content="#0b1220" />
 
   <style>
+    .request{
+  max-width:420px;
+  margin:60px auto;
+  padding:24px;
+  background:var(--card);
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+}
+
+.request h2{
+  margin-top:0;
+}
+
+.request input,
+.request button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid var(--line);
+}
+
+.request button{
+  background:#25D366;
+  color:#0b1220;
+  font-weight:700;
+  cursor:pointer;
+}
     /* Mobile sticky contact button */
 .mobile-contact{
   display:none;
@@ -594,5 +622,40 @@
     💬 Написати в WhatsApp
   </a>
 </div>
+  <section id="request" class="request">
+  <h2>📝 Швидка заявка</h2>
+
+  <form id="tgForm">
+    <input type="text" name="name" placeholder="Ваше імʼя" required>
+    <input type="tel" name="phone" placeholder="Телефон" required>
+    <input type="date" name="date" required>
+
+    <button type="submit">Надіслати</button>
+  </form>
+</section>
+  <script>
+const TOKEN = "PASTE_YOUR_BOT_TOKEN";
+const CHAT_ID = "PASTE_YOUR_CHAT_ID";
+
+document.getElementById("tgForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const data = new FormData(e.target);
+  const text =
+`📝 Нова заявка:
+👤 ${data.get("name")}
+📞 ${data.get("phone")}
+📅 ${data.get("date")}`;
+
+  fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ chat_id:CHAT_ID, text })
+  }).then(()=>{
+    alert("Заявку надіслано!");
+    e.target.reset();
+  });
+});
+</script>
 </body>
 </html>
