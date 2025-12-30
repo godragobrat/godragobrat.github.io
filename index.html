@@ -6,19 +6,21 @@
 
   <title>Трансфер на Драгобрат 4x4 з Ясіня | Проживання, тури</title>
 
+  <!-- Google Search Console verification -->
   <meta name="google-site-verification" content="PVVmi_E9iIZ-G8IULV87gjo1XiWZYuoG2UD-R6diLXE" />
 
+  <!-- SEO -->
   <meta name="description"
-    content="Трансфер 4x4 на Драгобрат з Ясіня. Проживання, тури, зима й літо. Швидко, безпечно. Телефон, Telegram, Viber, WhatsApp." />
+        content="Трансфер 4x4 на Драгобрат з Ясіня. Проживання, тури, зима й літо. Швидко, безпечно. Телефон, Telegram, Viber, WhatsApp." />
 
-  <!-- OpenGraph -->
+  <!-- OpenGraph / Telegram / WhatsApp preview -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="GoDragobrat — трансфер і відпочинок на Драгобраті">
   <meta property="og:description" content="4x4 трансфер з Ясіня, проживання, тури. Швидко й надійно.">
   <meta property="og:image" content="https://godragobrat.github.io/assets/hero/dragobrat-hero.jpg">
   <meta property="og:url" content="https://godragobrat.github.io/">
-
   <meta name="twitter:card" content="summary_large_image">
+
   <meta name="theme-color" content="#0b1220" />
 
   <style>
@@ -31,15 +33,10 @@
       --shadow: 0 10px 30px rgba(0,0,0,.28);
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:linear-gradient(180deg,var(--bg),#070b14);
-      color:var(--text);
-      line-height:1.55
-    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#070b14);color:var(--text);line-height:1.55}
     a{color:inherit}
     .wrap{max-width:var(--max);margin:0 auto;padding:18px}
+
     .topbar{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:8px 0}
     .brand{display:flex;gap:12px;align-items:center}
     .logo{
@@ -52,7 +49,7 @@
     .nav{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
     .nav a{text-decoration:none;color:var(--muted);border-bottom:1px dashed rgba(255,255,255,.28)}
 
-    /* ✅ HERO (виправлено, один правильний background) */
+    /* HERO */
     .hero{
       margin-top:10px;
       border:1px solid var(--line);
@@ -60,14 +57,15 @@
       box-shadow:var(--shadow);
       overflow:hidden;
       background:
-        linear-gradient(180deg, rgba(11,18,32,.70), rgba(11,18,32,.35)),
+        linear-gradient(180deg, rgba(11,18,32,.78), rgba(11,18,32,.55)),
         url("assets/hero/dragobrat-hero.jpg") center/cover no-repeat;
     }
-
     .hero-inner{display:grid;grid-template-columns: 1.35fr .65fr;gap:16px;padding:22px}
     @media (max-width: 860px){.hero-inner{grid-template-columns:1fr}}
     .h-title{margin:0;font-size:clamp(28px,4vw,46px);line-height:1.05;letter-spacing:-0.5px}
     .h-sub{margin:10px 0 0;color:var(--muted);max-width:70ch}
+    .hero .h-title, .hero .h-sub{ text-shadow: 0 8px 26px rgba(0,0,0,.55); }
+
     .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:9px;
@@ -77,6 +75,7 @@
     .btn.primary{background:var(--btn);color:var(--btnText);border-color:transparent}
     .btn.ghost{background:transparent}
     .mini{color:var(--muted);font-size:13px;margin-top:10px}
+
     .hero-card{
       border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.16);
       padding:14px;display:flex;flex-direction:column;gap:10px
@@ -86,8 +85,8 @@
     .kpi{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(255,255,255,.05)}
     .kpi b{display:block;font-size:13px}
     .kpi span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
-    .notice{border-left:4px solid rgba(255,255,255,.35);padding:10px 12px;background:rgba(255,255,255,.05);border-radius:14px;color:var(--muted)}
 
+    /* SECTIONS */
     .section{margin-top:18px}
     .section h2{margin:0 0 10px;font-size:22px}
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
@@ -105,31 +104,20 @@
     .list li{margin:6px 0;color:var(--muted)}
     .tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
     .tag{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.04);color:var(--muted)}
+
     .pricebox{display:grid;gap:10px;margin-top:10px}
     .row{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}
     .row b{font-size:13px}
     .row span{color:var(--muted);font-size:13px}
+
     details{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}
     details + details{margin-top:10px}
     summary{cursor:pointer;font-weight:800}
     footer{margin:26px 0 10px;color:var(--muted);font-size:13px}
+    .notice{border-left:4px solid rgba(255,255,255,.35);padding:10px 12px;background:rgba(255,255,255,.05);border-radius:14px;color:var(--muted)}
+    [data-show="0"]{display:none !important}
 
-    /* ✅ ФОТО-ГАЛЕРЕЯ (реальна) */
-    .gallery-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      gap:12px;
-    }
-    .gallery-grid img{
-      width:100%;
-      border-radius:14px;
-      cursor:pointer;
-      border:1px solid var(--line);
-      background:#0003;
-      display:block;
-    }
-
-    /* Mobile */
+    /* MOBILE UX */
     @media (max-width: 860px){
       .cta .btn{width:100%; justify-content:center}
       .hero-card{order:2}
@@ -137,25 +125,42 @@
       .h-sub{font-size:15px}
     }
 
-    /* ✅ Mobile sticky contact button */
+    /* GALLERY (real images + fullscreen) */
+    .photo-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .photo-grid img{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--line);
+      cursor:pointer;
+      transition: transform .18s ease;
+      display:block;
+    }
+    .photo-grid img:hover{ transform: scale(1.02); }
+
+    /* Mobile sticky contact button */
     .mobile-contact{display:none}
-    @media(max-width:768px){
+    @media (max-width: 768px){
       .mobile-contact{
         display:block;
         position:fixed;
-        left:16px;right:16px;bottom:16px;
+        left:16px; right:16px; bottom:16px;
         z-index:9999;
       }
       .mobile-contact a{
         display:block;
-        padding:14px;
-        background:#25D366;
         text-align:center;
+        padding:14px 18px;
         border-radius:16px;
-        font-weight:700;
+        background:#25D366;
         color:#0b1220;
-        box-shadow:0 12px 30px rgba(37,211,102,.45);
+        font-weight:800;
         text-decoration:none;
+        box-shadow: 0 12px 30px rgba(37,211,102,.45);
       }
     }
   </style>
@@ -189,7 +194,7 @@
     </div>
 
     <!-- HERO -->
-    <section class="hero" id="top">
+    <section class="hero" id="top" data-show="1">
       <div class="hero-inner">
         <div>
           <h2 class="h-title">Трансфер та відпочинок на Драгобраті — швидко й надійно</h2>
@@ -201,13 +206,8 @@
           <div class="cta">
             <a class="btn primary" href="tel:+380966056433">📞 Подзвонити</a>
             <a class="btn" href="https://t.me/+380966056433" target="_blank" rel="noopener">💬 Telegram</a>
-
-            <!-- ✅ Viber: працює на телефоні/ПК якщо Viber встановлений -->
             <a class="btn" href="viber://chat?number=%2B380966056433">💜 Viber</a>
-
-            <!-- ✅ WhatsApp: без пробілів і з правильним номером -->
             <a class="btn" href="https://wa.me/380966056433" target="_blank" rel="noopener">🟢 WhatsApp</a>
-
             <a class="btn ghost" href="#request">📝 Швидка заявка</a>
           </div>
 
@@ -230,7 +230,7 @@
     </section>
 
     <!-- TRANSFER -->
-    <section class="section" id="transfer">
+    <section class="section" id="transfer" data-show="1">
       <h2>🚐 Перевезення на Драгобрат</h2>
       <div class="grid">
         <div class="card span8">
@@ -262,14 +262,14 @@
             <li>Доставка до Ясіні / Драгобрату</li>
           </ol>
           <div class="notice" style="margin-top:10px;">
-            <b>Швидка заявка:</b> натисни “Швидка заявка” і заповни 20 секунд.
+            <b>Швидка заявка:</b> натисни “Швидка заявка” нижче і заповни 20 секунд.
           </div>
         </div>
       </div>
     </section>
 
     <!-- STAY -->
-    <section class="section" id="stay">
+    <section class="section" id="stay" data-show="1">
       <h2>🏡 Проживання</h2>
       <div class="grid">
         <div class="card span6">
@@ -303,7 +303,7 @@
     </section>
 
     <!-- TOURS -->
-    <section class="section" id="tours">
+    <section class="section" id="tours" data-show="1">
       <h2>🏔 Тури та активності</h2>
       <div class="grid">
         <div class="card span4">
@@ -337,7 +337,7 @@
     </section>
 
     <!-- PRICES -->
-    <section class="section" id="prices">
+    <section class="section" id="prices" data-show="1">
       <h2>💰 Ціни</h2>
       <div class="grid">
         <div class="card span8">
@@ -368,13 +368,14 @@
       </div>
     </section>
 
-    <!-- REQUEST FORM (стабільний варіант без ботів) -->
-    <section class="section" id="request">
+    <!-- REQUEST FORM (your safe messenger generator) -->
+    <section class="section" id="request" data-show="1">
       <h2>📝 Швидка заявка (20 секунд)</h2>
       <div class="grid">
         <div class="card span8">
           <p class="muted">
-            Заповнюєш — і відкривається WhatsApp з готовим текстом.
+            Це проста форма-чернетка. Вона відкриває готове повідомлення у Telegram / Viber / WhatsApp.
+            (Без серверів, без складнощів.)
           </p>
 
           <div class="grid" style="gap:10px">
@@ -398,41 +399,41 @@
           </div>
 
           <div class="cta" style="margin-top:12px">
-            <a class="btn primary" id="send_wa" href="#" target="_blank" rel="noopener">Надіслати у WhatsApp</a>
-            <a class="btn" href="https://t.me/+380966056433" target="_blank" rel="noopener">Telegram</a>
-            <a class="btn" href="viber://chat?number=%2B380966056433">Viber</a>
+            <a class="btn primary" id="send_tg" href="#">Надіслати в Telegram</a>
+            <a class="btn" id="send_vb" href="#">Надіслати у Viber</a>
+            <a class="btn" id="send_wa" href="#" target="_blank" rel="noopener">Надіслати у WhatsApp</a>
           </div>
 
-          <p class="mini">Натискаєш — відкривається WhatsApp з готовим повідомленням.</p>
+          <p class="mini">Після натискання відкриється месенджер з готовим текстом — ти просто відправляєш.</p>
         </div>
 
         <div class="card span4">
           <h3 style="margin:0 0 8px;">🔒 Безпечно і просто</h3>
-          <p class="muted">Форма не зберігає дані — вона лише генерує повідомлення.</p>
-          <div class="notice">Якщо секція не потрібна — видалиш її або сховаєш.</div>
+          <p class="muted">Форма не зберігає дані — вона лише генерує повідомлення для месенджера.</p>
         </div>
       </div>
     </section>
 
-    <!-- GALLERY -->
-    <section class="section" id="gallery">
+    <!-- GALLERY (real photos) -->
+    <section class="section" id="gallery" data-show="1">
       <h2>📸 Фото Драгобрату</h2>
       <div class="card">
-        <p class="muted">Завантаж фото у <code>assets/gallery/</code> як 1.jpg…6.jpg (або більше) — і вони покажуться тут.</p>
-
-        <div class="gallery-grid">
-          <img src="assets/gallery/1.jpg" alt="Фото 1">
-          <img src="assets/gallery/2.jpg" alt="Фото 2">
-          <img src="assets/gallery/3.jpg" alt="Фото 3">
-          <img src="assets/gallery/4.jpg" alt="Фото 4">
-          <img src="assets/gallery/5.jpg" alt="Фото 5">
-          <img src="assets/gallery/6.jpg" alt="Фото 6">
+        <p class="muted" style="margin-top:0">
+          Натисни на фото — відкриється на весь екран.
+        </p>
+        <div class="photo-grid">
+          <img src="assets/gallery/1.jpg" alt="Драгобрат фото 1" loading="lazy">
+          <img src="assets/gallery/2.jpg" alt="Драгобрат фото 2" loading="lazy">
+          <img src="assets/gallery/3.jpg" alt="Драгобрат фото 3" loading="lazy">
+          <img src="assets/gallery/4.jpg" alt="Драгобрат фото 4" loading="lazy">
+          <img src="assets/gallery/5.jpg" alt="Драгобрат фото 5" loading="lazy">
+          <img src="assets/gallery/6.jpg" alt="Драгобрат фото 6" loading="lazy">
         </div>
       </div>
     </section>
 
     <!-- REVIEWS -->
-    <section class="section" id="reviews">
+    <section class="section" id="reviews" data-show="1">
       <h2>⭐ Відгуки</h2>
       <div class="grid">
         <div class="card span4">
@@ -454,7 +455,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="section" id="faq">
+    <section class="section" id="faq" data-show="1">
       <h2>❓ FAQ</h2>
       <div class="card">
         <details open>
@@ -467,7 +468,7 @@
         </details>
         <details>
           <summary>Як швидко підтверджуєте?</summary>
-          <div class="muted" style="margin-top:8px;">Зазвичай швидко в Telegram/Viber/WhatsApp. У сезон краще писати завчасно.</div>
+          <div class="muted" style="margin-top:8px;">Зазвичай дуже швидко в Telegram/Viber/WhatsApp. У сезон краще писати завчасно.</div>
         </details>
         <details>
           <summary>Чи допомагаєте з проживанням?</summary>
@@ -477,7 +478,7 @@
     </section>
 
     <!-- CONTACTS -->
-    <section class="section" id="contacts">
+    <section class="section" id="contacts" data-show="1">
       <h2>📞 Контакти</h2>
       <div class="grid">
         <div class="card span6">
@@ -498,7 +499,7 @@
           <h3 style="margin:0 0 8px;">📍 Географія</h3>
           <p class="muted" style="margin:0">Львів • Івано-Франківськ • Ужгород/Мукачево • Ясіня • Драгобрат</p>
           <div class="notice" style="margin-top:10px;">
-            Якщо хочеш — додамо карту Google (iframe) або кнопку “Відкрити маршрут”.
+            Якщо хочеш — додамо карту Google (вставка iframe) або кнопку “Відкрити маршрут”.
           </div>
           <a class="btn ghost" href="#top" style="margin-top:10px">⬆️ На початок</a>
         </div>
@@ -512,25 +513,16 @@
 
   <!-- Mobile sticky contact button -->
   <div class="mobile-contact">
-    <a href="https://wa.me/380966056433" target="_blank" rel="noopener">💬 Написати в WhatsApp</a>
+    <a href="https://wa.me/380966056433" target="_blank" rel="noopener">
+      💬 Написати в WhatsApp
+    </a>
   </div>
 
   <script>
-    // Рік у футері
+    // Year
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // ✅ Fullscreen для галереї
-    document.querySelectorAll("#gallery .gallery-grid img").forEach(img=>{
-      img.addEventListener("click", ()=>{
-        const f = document.createElement("div");
-        f.style = "position:fixed;inset:0;background:#000c;display:grid;place-items:center;z-index:9999;padding:18px";
-        f.innerHTML = `<img src="${img.src}" style="max-width:95%;max-height:95%;border-radius:16px;border:1px solid rgba(255,255,255,.2)">`;
-        f.addEventListener("click", ()=>f.remove());
-        document.body.appendChild(f);
-      });
-    });
-
-    // ✅ Заявка → WhatsApp з текстом
+    // Quick request generator
     function makeMsg(){
       const need = (document.getElementById('f_need')?.value || '').trim();
       const date = (document.getElementById('f_date')?.value || '').trim();
@@ -546,14 +538,42 @@
     }
     function enc(s){ return encodeURIComponent(s); }
 
-    const waBtn = document.getElementById('send_wa');
-    if(waBtn){
-      waBtn.addEventListener('click', (e)=>{
-        e.preventDefault();
-        const msg = makeMsg();
-        window.open("https://wa.me/380966056433?text=" + enc(msg), "_blank");
+    const tg = document.getElementById('send_tg');
+    const vb = document.getElementById('send_vb');
+    const wa = document.getElementById('send_wa');
+
+    if(tg) tg.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const msg = makeMsg();
+      window.open("https://t.me/+380966056433", "_blank");
+      alert("Скопіюй і відправ у Telegram:\n\n" + msg);
+    });
+
+    if(vb) vb.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const msg = makeMsg();
+      window.location.href = "viber://chat?number=%2B380966056433";
+      setTimeout(()=>alert("Скопіюй і відправ у Viber:\n\n" + msg), 300);
+    });
+
+    if(wa) wa.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const msg = makeMsg();
+      window.open("https://wa.me/380966056433?text=" + enc(msg), "_blank");
+    });
+
+    // Gallery fullscreen
+    document.querySelectorAll(".photo-grid img").forEach(img=>{
+      img.addEventListener("click", ()=>{
+        const f=document.createElement("div");
+        f.style.cssText =
+          "position:fixed;inset:0;background:rgba(0,0,0,.80);" +
+          "display:grid;place-items:center;z-index:9999;padding:18px";
+        f.innerHTML = `<img src="${img.src}" style="max-width:92%;max-height:92%;border-radius:16px;border:1px solid rgba(255,255,255,.18)">`;
+        f.addEventListener("click", ()=>f.remove());
+        document.body.appendChild(f);
       });
-    }
+    });
   </script>
 </body>
 </html>
