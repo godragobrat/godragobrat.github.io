@@ -202,6 +202,26 @@
     .h-title{
   letter-spacing:-0.5px;
 }
+    .mobile-contact{display:none}
+
+@media(max-width:768px){
+  .mobile-contact{
+    display:block;
+    position:fixed;
+    left:16px;right:16px;bottom:16px;
+    z-index:9999;
+  }
+  .mobile-contact a{
+    display:block;
+    padding:14px;
+    background:#25D366;
+    text-align:center;
+    border-radius:16px;
+    font-weight:700;
+    color:#0b1220;
+    box-shadow:0 12px 30px rgba(37,211,102,.45);
+  }
+}
   </style>
 </head>
 
@@ -245,6 +265,34 @@
     <img src="assets/gallery/6.jpg">
   </div>
 </section>
+    .gallery{
+  max-width:1120px;
+  margin:60px auto;
+  padding:0 18px;
+}
+
+.gallery .grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+
+.gallery img{
+  width:100%;
+  border-radius:14px;
+  cursor:pointer;
+}
+<script>
+document.querySelectorAll(".gallery img").forEach(img=>{
+  img.onclick=()=> {
+    const f=document.createElement("div");
+    f.style=`position:fixed;inset:0;background:#000c;display:grid;place-items:center;z-index:9999`;
+    f.innerHTML=`<img src="${img.src}" style="max-width:90%;max-height:90%">`;
+    f.onclick=()=>f.remove();
+    document.body.append(f);
+  }
+});
+</script>
     <section class="hero" id="top" data-show="1">
       <div class="hero-inner">
         <div>
@@ -668,5 +716,8 @@ document.getElementById("tgForm").addEventListener("submit", e => {
   });
 });
 </script>
+  <div class="mobile-contact">
+  <a href="https://wa.me/380966056433" target="_blank">💬 Написати в WhatsApp</a>
+</div>
 </body>
 </html>
