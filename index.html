@@ -42,18 +42,17 @@
   <meta property="og:locale" content="uk_UA">
   <meta property="og:title" content="GoDragobrat — трансфер і відпочинок на Драгобраті">
   <meta property="og:description" content="4×4 трансфер з Ясіня, підбір проживання, тури. Швидко й надійно, цілий рік.">
-  <meta property="og:image" content="https://godragobrat.com/assets/hero/dragobrat-hero.jpg">
+  <meta property="og:image" content="https://godragobrat.github.io/assets/hero/dragobrat-hero.jpg">
   <meta property="og:image:alt" content="Засніжені гори Драгобрат">
-  <meta property="og:url" content="https://godragobrat.com/">
+  <meta property="og:url" content="https://godragobrat.github.io/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GoDragobrat — трансфер і відпочинок на Драгобраті">
   <meta name="twitter:description" content="4×4 трансфер з Ясіня, підбір проживання, тури. Швидко й надійно.">
-  <meta name="twitter:image" content="https://godragobrat.com/assets/hero/dragobrat-hero.jpg">
+  <meta name="twitter:image" content="https://godragobrat.github.io/assets/hero/dragobrat-hero.jpg">
 
   <!-- Favicon (inline SVG, без зайвого запиту) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0b09'/%3E%3Cpath d='M6 50 24 18 33 33 41 21 58 50Z' fill='%23e8b264'/%3E%3Cpath d='M20 50 30 32 40 47Z' fill='%23f6ead6'/%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230d0b09'/%3E%3Cpath d='M6 50 24 18 33 33 41 21 58 50Z' fill='%23e8b264'/%3E%3Cpath d='M20 50 30 32 40 47Z' fill='%23f6ead6'/%3E%3C/svg%3E">
-
   <link rel="preload" as="image" href="assets/hero/dragobrat-hero.jpg">
 
   <!-- Структуровані дані для Google -->
@@ -63,9 +62,9 @@
     "@type": "TravelAgency",
     "name": "GoDragobrat",
     "description": "Трансфер 4×4 на Драгобрат з Ясіня, підбір проживання та організація турів у Карпатах.",
-    "url": "https://godragobrat.com/",
-    "image": "https://godragobrat.com/assets/hero/dragobrat-hero.jpg",
-    "logo": "https://godragobrat.com/assets/logo.jpg",
+    "url": "https://godragobrat.github.io/",
+    "image": "https://godragobrat.github.io/assets/hero/dragobrat-hero.jpg",
+    "logo": "https://godragobrat.github.io/assets/logo.jpg",
     "telephone": "+380966056433",
     "priceRange": "₴₴",
     "areaServed": ["Драгобрат", "Ясіня", "Львів", "Івано-Франківськ", "Ужгород", "Мукачево", "Закарпаття", "Карпати"],
@@ -485,6 +484,17 @@
     @media (max-width:560px){ .gallery-grid{grid-template-columns:1fr 1fr;gap:10px} }
     @media (max-width:380px){ .gallery-grid{grid-template-columns:1fr} }
 
+    /* ================= ВІДЕО ================= */
+    .video-frame{
+      border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+      background:#000;box-shadow:var(--shadow-sm);
+    }
+    .video-frame video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+    .video-cap{
+      padding:14px 18px;font-size:13.5px;color:var(--muted);
+      background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    }
+
     /* ================= LIGHTBOX ================= */
     .lb{
       position:fixed;inset:0;z-index:1000;padding:22px;
@@ -635,6 +645,7 @@
     <a href="#tours">🏔 Тури</a>
     <a href="#prices">💰 Ціни</a>
     <a href="#gallery">📸 Фото</a>
+    <a href="#video">🎥 Відео</a>
     <a href="#reviews">⭐ Відгуки</a>
     <a href="#faq">❓ FAQ</a>
     <a href="#contacts">📞 Контакти</a>
@@ -881,11 +892,41 @@
 
         <div class="gallery-grid" id="gallery-grid">
           <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/1.jpg" alt="Драгобрат, зимовий пейзаж" loading="lazy" decoding="async" width="1600" height="1200"></button></figure>
-          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/2.jpg" alt="Трансфер 4×4 дорогою на Драгобрат" loading="lazy" decoding="async" width="1600" height="1200"></button></figure>
-          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/3.jpg" alt="Гори та панорама Драгобрату" loading="lazy" decoding="async" width="1600" height="1200"></button></figure>
-          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/4.jpg" alt="Позашляховик біля бази на Драгобраті" loading="lazy" decoding="async" width="1600" height="1200"></button></figure>
-          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/5.jpg" alt="Літні краєвиди Карпат" loading="lazy" decoding="async" width="1600" height="1200"></button></figure>
-          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/6.jpg" alt="Відпочинок у горах: чан і сауна" loading="lazy" decoding="async" width="1600" height="1200"></button></figure>
+          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/2.jpg" alt="Альпійське озеро в горах Карпат з висоти" loading="lazy" decoding="async" width="889" height="657"></button></figure>
+          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/3.jpg" alt="Гірське озеро та стежка в Карпатах" loading="lazy" decoding="async" width="1200" height="1600"></button></figure>
+          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/4.jpg" alt="Родина на гойдалці з видом на гори" loading="lazy" decoding="async" width="1200" height="1600"></button></figure>
+          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/5.jpg" alt="Наметовий табір і веселка в горах" loading="lazy" decoding="async" width="740" height="1600"></button></figure>
+          <figure><button type="button" class="shot" aria-label="Відкрити фото на весь екран"><img src="assets/gallery/6.jpg" alt="Туман над гірською долиною з озером" loading="lazy" decoding="async" width="1200" height="1600"></button></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ВІДЕО ================= -->
+    <section class="section alt reveal" id="video" data-show="1">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Відео</span>
+          <h2>Драгобрат у русі</h2>
+          <p>Короткі кадри з реальних поїздок: дорога 4×4 і краєвиди в горах.</p>
+        </div>
+
+        <div class="grid">
+          <div class="span6">
+            <div class="video-frame">
+              <video controls playsinline preload="none" poster="assets/video/4x4-marshrut.jpg">
+                <source src="assets/video/4x4-marshrut.mp4" type="video/mp4">
+              </video>
+              <div class="video-cap">🚙 4×4 на маршруті до бази</div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="video-frame">
+              <video controls playsinline preload="none" poster="assets/video/gory-tuman.jpg">
+                <source src="assets/video/gory-tuman.mp4" type="video/mp4">
+              </video>
+              <div class="video-cap">🏔 Гори в тумані — маршрут трекінгу</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1067,6 +1108,7 @@
           <a href="#tours">Тури</a>
           <a href="#prices">Ціни</a>
           <a href="#gallery">Фото</a>
+          <a href="#video">Відео</a>
           <a href="#faq">FAQ</a>
         </div>
         <div>
