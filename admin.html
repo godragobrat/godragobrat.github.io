@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Адмінка — GoDragobrat</title>
+<style>
+  :root{
+    --bg:#0d0b09; --bg-2:#131009; --surface:#1a1510; --surface-2:#221b13;
+    --text:#f5efe4; --muted:#b7ab95; --faint:#8b8069;
+    --line:rgba(245,239,228,.10); --line-2:rgba(245,239,228,.18);
+    --gold:#e8b264; --gold-soft:#f2c988;
+    --ok:#63c988; --err:#e2685f;
+    --radius:14px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{
+    margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.5;
+    padding:24px 16px 80px;
+  }
+  .wrap{max-width:880px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 24px}
+  h2{font-size:16px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .section{
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:linear-gradient(180deg,var(--surface-2),var(--surface));
+    padding:20px;margin-bottom:16px;
+  }
+  .section p.hint{color:var(--muted);font-size:13px;margin:2px 0 16px}
+  label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px;color:var(--muted)}
+  label:first-of-type{margin-top:0}
+  input[type=text],input[type=tel],textarea{
+    width:100%;padding:10px 12px;border-radius:10px;font:inherit;font-size:14px;
+    border:1px solid var(--line-2);background:rgba(245,239,228,.05);color:var(--text);
+  }
+  textarea{resize:vertical;min-height:60px}
+  input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+  .row3{display:grid;grid-template-columns:1.4fr 1.4fr .8fr;gap:8px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media (max-width:640px){ .row3,.row2{grid-template-columns:1fr} }
+  .card-block{border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:10px;background:rgba(0,0,0,.15)}
+  .card-block:first-of-type{margin-top:12px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 16px;border-radius:11px;border:1px solid var(--line-2);
+    background:rgba(245,239,228,.06);color:var(--text);font:inherit;font-weight:700;font-size:13.5px;
+    cursor:pointer;
+  }
+  .btn:hover{background:rgba(245,239,228,.12)}
+  .btn.primary{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#1a1206;border-color:transparent}
+  .btn.danger{background:rgba(226,104,95,.15);border-color:rgba(226,104,95,.5);color:#ffb4ae}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn.sm{padding:7px 12px;font-size:12.5px}
+  .toggles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:560px){ .toggles{grid-template-columns:1fr} }
+  .toggle{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:rgba(0,0,0,.15);
+    font-size:13.5px;
+  }
+  .switch{position:relative;width:40px;height:22px;flex:none}
+  .switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;inset:0;background:rgba(245,239,228,.15);border-radius:999px;cursor:pointer;transition:.2s}
+  .slider::before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+  input:checked + .slider{background:var(--gold)}
+  input:checked + .slider::before{transform:translateX(18px)}
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .slot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(0,0,0,.2)}
+  .slot .ph{aspect-ratio:4/3;display:grid;place-items:center;background:rgba(0,0,0,.25);color:var(--faint);font-size:12px}
+  .slot img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+  .slot .meta{padding:8px;font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:6px}
+  .slot .meta b{color:var(--text);font-weight:700}
+  .slot .actions{display:flex;gap:6px;padding:0 8px 8px}
+  .status{font-size:12.5px;margin-top:8px;min-height:16px}
+  .status.ok{color:var(--ok)}
+  .status.err{color:var(--err)}
+  .status.busy{color:var(--gold-soft)}
+  .top-actions{position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5;border-bottom:1px solid var(--line);margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .top-actions .status{margin:0;flex:1 1 auto}
+  a.link{color:var(--gold-soft)}
+  .gate{max-width:460px;margin:60px auto;text-align:center}
+  .gate .section{text-align:left}
+  code{background:rgba(245,239,228,.08);padding:1px 6px;border-radius:6px;font-size:.9em}
+  .muted{color:var(--muted)}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="gate" class="gate" hidden>
+    <h1>🔑 Вхід в адмінку GoDragobrat</h1>
+    <p class="sub">Встав GitHub-токен доступу — він зберігається лише в цьому браузері.</p>
+    <div class="section">
+      <label for="tokenInput">Fine-grained personal access token</label>
+      <input type="text" id="tokenInput" placeholder="github_pat_...">
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn primary" id="btnSaveToken">Зберегти й увійти</button>
+      </div>
+      <div class="status" id="gateStatus"></div>
+      <p class="hint" style="margin-top:16px">
+        Створити токен: <a class="link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a><br>
+        Resource owner: <code>godragobrat</code> → Repository access: <code>godragobrat.github.io</code> →
+        Permissions → Contents: <code>Read and write</code>.
+      </p>
+    </div>
+  </div>
+
+  <div id="app" hidden>
+    <div class="top-actions">
+      <button class="btn primary" id="btnSaveAll">💾 Зберегти всі текстові зміни</button>
+      <button class="btn" id="btnReload">🔄 Оновити дані з сайту</button>
+      <a class="btn" href="https://godragobrat.com/" target="_blank" rel="noopener">🌐 Переглянути сайт</a>
+      <button class="btn sm" id="btnLogout" style="margin-left:auto">Вийти</button>
+      <div class="status" id="saveStatus"></div>
+    </div>
+
+    <h1>⚙️ Адмінка GoDragobrat</h1>
+    <p class="sub">Редагуй текст і фото. Зміни тексту публікуються кнопкою «Зберегти всі текстові зміни» вгорі. Фото — окремо, кожне зберігається одразу.</p>
+
+    <div class="section">
+      <h2>📞 Телефон</h2>
+      <p class="hint">Один номер для всіх кнопок сайту (дзвінок, Telegram, Viber, WhatsApp).</p>
+      <label for="f_phone">Номер (12 цифр, з кодом країни, без +)</label>
+      <input type="tel" id="f_phone" placeholder="380966056433" maxlength="12">
+    </div>
+
+    <div class="section">
+      <h2>🏔 Головний екран (hero)</h2>
+      <label for="f_hero_title">Заголовок</label>
+      <input type="text" id="f_hero_title">
+      <p class="hint" style="margin:4px 0 0">Можна лишити <code>&lt;span class="accent"&gt;слово&lt;/span&gt;</code> навколо частини тексту — воно стане золотим.</p>
+      <label for="f_hero_subtitle">Підзаголовок</label>
+      <textarea id="f_hero_subtitle"></textarea>
+    </div>
+
+    <div class="section">
+      <h2>💰 Ціни</h2>
+      <p class="hint">Для кожного рядка: назва послуги, деталі, вартість.</p>
+      <div id="pricesBlock"></div>
+    </div>
+
+    <div class="section">
+      <h2>⭐ Відгуки</h2>
+      <div id="reviewsBlock"></div>
+    </div>
+
+    <div class="section">
+      <h2>❓ FAQ</h2>
+      <div id="faqBlock"></div>
+    </div>
+
+    <div class="section">
+      <h2>🎥 Підписи під відео</h2>
+      <label for="f_video1_cap">Підпис до 1-го відео</label>
+      <input type="text" id="f_video1_cap">
+      <label for="f_video2_cap">Підпис до 2-го відео</label>
+      <input type="text" id="f_video2_cap">
+      <p class="hint">Заміна самих відеофайлів — окреме звернення (потребує стиснення для сайту).</p>
+    </div>
+
+    <div class="section">
+      <h2>👁 Видимість секцій</h2>
+      <p class="hint">Вимкни перемикач — секція одразу зникне із сайту (після збереження).</p>
+      <div class="toggles" id="togglesBlock"></div>
+    </div>
+
+    <div class="section">
+      <h2>📸 Галерея фото</h2>
+      <p class="hint">До 10 фото. Завантаження саме стискає й змінює розмір фото під сайт. Кожна дія (завантаження/видалення) зберігається одразу, без кнопки «Зберегти».</p>
+      <div class="gallery-grid" id="galleryBlock"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const REPO = 'godragobrat/godragobrat.github.io';
+const BRANCH = 'main';
+const API = 'https://api.github.com/repos/' + REPO;
+const TOKEN_KEY = 'gdb_admin_token';
+
+const gate = document.getElementById('gate');
+const app = document.getElementById('app');
+
+function getToken(){ return localStorage.getItem(TOKEN_KEY) || ''; }
+function setToken(t){ localStorage.setItem(TOKEN_KEY, t); }
+function clearToken(){ localStorage.removeItem(TOKEN_KEY); }
+
+function ghHeaders(extra){
+  return Object.assign({
+    'Authorization': 'Bearer ' + getToken(),
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  }, extra || {});
+}
+
+// UTF-8 safe base64
+function b64Encode(str){
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(m,p1){ return String.fromCharCode('0x'+p1); }));
+}
+function b64Decode(str){
+  return decodeURIComponent(atob(str).split('').map(function(c){ return '%' + ('00'+c.charCodeAt(0).toString(16)).slice(-2); }).join(''));
+}
+
+async function ghGetText(path){
+  const res = await fetch(API + '/contents/' + path + '?ref=' + BRANCH + '&t=' + Date.now(), { headers: ghHeaders() });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('GET ' + path + ' -> ' + res.status);
+  const data = await res.json();
+  return { sha: data.sha, text: b64Decode(data.content.replace(/\s/g,'')) };
+}
+
+async function ghGetBinaryInfo(path){
+  const res = await fetch(API + '/contents/' + path + '?ref=' + BRANCH + '&t=' + Date.now(), { headers: ghHeaders() });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('GET ' + path + ' -> ' + res.status);
+  const data = await res.json();
+  return { sha: data.sha, base64: data.content.replace(/\s/g,'') };
+}
+
+async function ghPut(path, base64Content, sha, message){
+  const body = { message: message, content: base64Content, branch: BRANCH };
+  if (sha) body.sha = sha;
+  const res = await fetch(API + '/contents/' + path, {
+    method: 'PUT',
+    headers: ghHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) { const t = await res.text(); throw new Error('PUT ' + path + ' -> ' + res.status + ' ' + t); }
+  return res.json();
+}
+
+async function ghDelete(path, sha, message){
+  const res = await fetch(API + '/contents/' + path, {
+    method: 'DELETE',
+    headers: ghHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ message: message, sha: sha, branch: BRANCH })
+  });
+  if (!res.ok) { const t = await res.text(); throw new Error('DELETE ' + path + ' -> ' + res.status + ' ' + t); }
+  return res.json();
+}
+
+// ---------- field markers ----------
+function extractField(html, key){
+  const re = new RegExp('<!--EDIT:' + key + '-->([\\s\\S]*?)<!--/EDIT-->');
+  const m = html.match(re);
+  return m ? m[1] : null;
+}
+function replaceField(html, key, val){
+  const re = new RegExp('(<!--EDIT:' + key + '-->)[\\s\\S]*?(<!--/EDIT-->)');
+  if (!re.test(html)) return html;
+  return html.replace(re, function(_, a, b){ return a + val + b; });
+}
+function extractShow(html, id){
+  const re = new RegExp('id="' + id + '" data-show="(0|1)"');
+  const m = html.match(re);
+  return m ? m[1] : '1';
+}
+function replaceShow(html, id, val){
+  const re = new RegExp('(id="' + id + '" data-show=")[01](")');
+  return html.replace(re, '$1' + val + '$2');
+}
+function extractPhoneDigits(html){
+  const m = html.match(/380\d{9}/);
+  return m ? m[0] : '';
+}
+function formatPhone(d){
+  if (!/^\d{12}$/.test(d)) return d;
+  return '+' + d.slice(0,3) + ' ' + d.slice(3,5) + ' ' + d.slice(5,8) + ' ' + d.slice(8,10) + ' ' + d.slice(10,12);
+}
+function replacePhone(html, oldDigits, newDigits){
+  if (!oldDigits || oldDigits === newDigits) return html;
+  const oldFmt = formatPhone(oldDigits), newFmt = formatPhone(newDigits);
+  let out = html.split(oldDigits).join(newDigits);
+  out = out.split(oldFmt).join(newFmt);
+  return out;
+}
+
+const PRICES = [1,2,3,4];
+const REVIEWS = [1,2,3];
+const FAQS = [1,2,3,4];
+const SECTIONS = [
+  {id:'transfer', label:'🚐 Перевезення'},
+  {id:'stay', label:'🏡 Проживання'},
+  {id:'tours', label:'🏔 Тури'},
+  {id:'prices', label:'💰 Ціни'},
+  {id:'gallery', label:'📸 Фото'},
+  {id:'video', label:'🎥 Відео'},
+  {id:'request', label:'📝 Швидка заявка'},
+  {id:'reviews', label:'⭐ Відгуки'},
+  {id:'faq', label:'❓ FAQ'},
+  {id:'contacts', label:'📞 Контакти'}
+];
+
+function buildDynamicBlocks(){
+  const p = document.getElementById('pricesBlock');
+  p.innerHTML = PRICES.map(function(i){
+    return '<div class="card-block"><div class="row3">' +
+      '<div><label>Назва</label><input type="text" id="f_price' + i + '_label"></div>' +
+      '<div><label>Деталі</label><input type="text" id="f_price' + i + '_detail"></div>' +
+      '<div><label>Вартість</label><input type="text" id="f_price' + i + '_value"></div>' +
+      '</div></div>';
+  }).join('');
+
+  const r = document.getElementById('reviewsBlock');
+  r.innerHTML = REVIEWS.map(function(i){
+    return '<div class="card-block">' +
+      '<label>Заголовок відгуку</label><input type="text" id="f_review' + i + '_quote">' +
+      '<label>Текст</label><textarea id="f_review' + i + '_text"></textarea>' +
+      '<label>Автор</label><input type="text" id="f_review' + i + '_who" placeholder="— Клієнт, Місто">' +
+      '</div>';
+  }).join('');
+
+  const f = document.getElementById('faqBlock');
+  f.innerHTML = FAQS.map(function(i){
+    return '<div class="card-block">' +
+      '<label>Питання</label><input type="text" id="f_faq' + i + '_q">' +
+      '<label>Відповідь</label><textarea id="f_faq' + i + '_a"></textarea>' +
+      '</div>';
+  }).join('');
+
+  const t = document.getElementById('togglesBlock');
+  t.innerHTML = SECTIONS.map(function(s){
+    return '<label class="toggle">' + s.label +
+      '<span class="switch"><input type="checkbox" id="f_show_' + s.id + '"><span class="slider"></span></span>' +
+      '</label>';
+  }).join('');
+}
+
+let currentHtml = '';
+let currentSha = '';
+
+function setStatus(el, msg, kind){
+  el.textContent = msg || '';
+  el.className = 'status' + (kind ? ' ' + kind : '');
+}
+
+function fillFormFromHtml(html){
+  document.getElementById('f_phone').value = extractPhoneDigits(html);
+  document.getElementById('f_hero_title').value = (extractField(html,'hero_title')||'').trim();
+  document.getElementById('f_hero_subtitle').value = (extractField(html,'hero_subtitle')||'').trim().replace(/\s+/g,' ');
+
+  PRICES.forEach(function(i){
+    ['label','detail','value'].forEach(function(k){
+      const el = document.getElementById('f_price'+i+'_'+k);
+      if (el) el.value = (extractField(html,'price'+i+'_'+k)||'').trim();
+    });
+  });
+  REVIEWS.forEach(function(i){
+    ['quote','text','who'].forEach(function(k){
+      const el = document.getElementById('f_review'+i+'_'+k);
+      if (el) el.value = (extractField(html,'review'+i+'_'+k)||'').trim();
+    });
+  });
+  FAQS.forEach(function(i){
+    ['q','a'].forEach(function(k){
+      const el = document.getElementById('f_faq'+i+'_'+k);
+      if (el) el.value = (extractField(html,'faq'+i+'_'+k)||'').trim();
+    });
+  });
+  document.getElementById('f_video1_cap').value = (extractField(html,'video1_cap')||'').trim();
+  document.getElementById('f_video2_cap').value = (extractField(html,'video2_cap')||'').trim();
+
+  SECTIONS.forEach(function(s){
+    const el = document.getElementById('f_show_'+s.id);
+    if (el) el.checked = extractShow(html, s.id) !== '0';
+  });
+}
+
+function applyFormToHtml(html){
+  const oldPhone = extractPhoneDigits(html);
+  const newPhone = document.getElementById('f_phone').value.replace(/\D/g,'');
+  if (newPhone && /^\d{12}$/.test(newPhone)) {
+    html = replacePhone(html, oldPhone, newPhone);
+  }
+
+  html = replaceField(html, 'hero_title', document.getElementById('f_hero_title').value);
+  html = replaceField(html, 'hero_subtitle', document.getElementById('f_hero_subtitle').value);
+
+  PRICES.forEach(function(i){
+    ['label','detail','value'].forEach(function(k){
+      const el = document.getElementById('f_price'+i+'_'+k);
+      if (el) html = replaceField(html, 'price'+i+'_'+k, el.value);
+    });
+  });
+  REVIEWS.forEach(function(i){
+    ['quote','text','who'].forEach(function(k){
+      const el = document.getElementById('f_review'+i+'_'+k);
+      if (el) html = replaceField(html, 'review'+i+'_'+k, el.value);
+    });
+  });
+  FAQS.forEach(function(i){
+    ['q','a'].forEach(function(k){
+      const el = document.getElementById('f_faq'+i+'_'+k);
+      if (el) html = replaceField(html, 'faq'+i+'_'+k, el.value);
+    });
+  });
+  html = replaceField(html, 'video1_cap', document.getElementById('f_video1_cap').value);
+  html = replaceField(html, 'video2_cap', document.getElementById('f_video2_cap').value);
+
+  SECTIONS.forEach(function(s){
+    const el = document.getElementById('f_show_'+s.id);
+    if (el) html = replaceShow(html, s.id, el.checked ? '1' : '0');
+  });
+
+  return html;
+}
+
+async function loadSite(){
+  const status = document.getElementById('saveStatus');
+  setStatus(status, 'Завантажую поточний сайт…', 'busy');
+  try {
+    const file = await ghGetText('index.html');
+    if (!file) throw new Error('index.html не знайдено в репозиторії');
+    currentHtml = file.text;
+    currentSha = file.sha;
+    fillFormFromHtml(currentHtml);
+    setStatus(status, 'Дані завантажено ✓', 'ok');
+    await loadGallery();
+  } catch (e) {
+    setStatus(status, 'Помилка завантаження: ' + e.message, 'err');
+  }
+}
+
+async function saveAll(){
+  const status = document.getElementById('saveStatus');
+  const btn = document.getElementById('btnSaveAll');
+  btn.disabled = true;
+  setStatus(status, 'Зберігаю…', 'busy');
+  try {
+    const fresh = await ghGetText('index.html');
+    if (!fresh) throw new Error('index.html не знайдено');
+    const updated = applyFormToHtml(fresh.text);
+    const res = await ghPut('index.html', b64Encode(updated), fresh.sha, 'Адмінка: оновлення тексту сайту');
+    currentHtml = updated;
+    currentSha = res.content.sha;
+    setStatus(status, 'Збережено ✓ Сайт оновиться протягом хвилини.', 'ok');
+  } catch (e) {
+    setStatus(status, 'Помилка збереження: ' + e.message, 'err');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ---------- gallery ----------
+const GALLERY_SLOTS = 10;
+
+function resizeImageFile(file, maxDim, quality){
+  return new Promise(function(resolve, reject){
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = function(e){
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = function(){
+        let w = img.width, h = img.height;
+        const scale = Math.min(1, maxDim / Math.max(w, h));
+        w = Math.max(1, Math.round(w * scale));
+        h = Math.max(1, Math.round(h * scale));
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob(function(blob){
+          const r2 = new FileReader();
+          r2.onerror = reject;
+          r2.onload = function(){ resolve(r2.result.split(',')[1]); };
+          r2.readAsDataURL(blob);
+        }, 'image/jpeg', quality);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+const gallerySha = {};
+
+async function loadGallery(){
+  const block = document.getElementById('galleryBlock');
+  block.innerHTML = '';
+  for (let i = 1; i <= GALLERY_SLOTS; i++){
+    const slotEl = document.createElement('div');
+    slotEl.className = 'slot';
+    slotEl.id = 'gslot_' + i;
+    slotEl.innerHTML = '<div class="ph">завантаження…</div><div class="meta"><b>#' + i + '</b><span></span></div>' +
+      '<div class="actions">' +
+      '<label class="btn sm" style="flex:1;text-align:center">Завантажити<input type="file" accept="image/*" style="display:none" data-slot="' + i + '"></label>' +
+      '<button class="btn sm danger" data-del="' + i + '" disabled>Видалити</button>' +
+      '</div><div class="status" style="padding:0 8px 8px" data-st="' + i + '"></div>';
+    block.appendChild(slotEl);
+  }
+
+  const results = await Promise.all(Array.from({length: GALLERY_SLOTS}, function(_, idx){
+    const n = idx + 1;
+    return ghGetBinaryInfo('assets/gallery/' + n + '.jpg').then(function(r){ return {n:n, info:r}; }).catch(function(){ return {n:n, info:null}; });
+  }));
+
+  results.forEach(function(r){
+    renderSlot(r.n, r.info);
+  });
+
+  block.querySelectorAll('input[type=file]').forEach(function(inp){
+    inp.addEventListener('change', function(){
+      if (inp.files && inp.files[0]) uploadSlot(parseInt(inp.dataset.slot,10), inp.files[0]);
+    });
+  });
+  block.querySelectorAll('button[data-del]').forEach(function(btn){
+    btn.addEventListener('click', function(){ deleteSlot(parseInt(btn.dataset.del,10)); });
+  });
+}
+
+function renderSlot(n, info){
+  const el = document.getElementById('gslot_' + n);
+  if (!el) return;
+  const ph = el.querySelector('.ph');
+  const meta = el.querySelector('.meta span');
+  const delBtn = el.querySelector('button[data-del]');
+  if (info) {
+    gallerySha[n] = info.sha;
+    let img = el.querySelector('img');
+    if (!img) { img = document.createElement('img'); el.insertBefore(img, el.firstChild); ph.remove(); }
+    img.src = 'data:image/jpeg;base64,' + info.base64;
+    meta.textContent = Math.round(info.base64.length * 0.75 / 1024) + ' KB';
+    delBtn.disabled = false;
+  } else {
+    gallerySha[n] = null;
+    const img = el.querySelector('img');
+    if (img) { img.remove(); const ph2 = document.createElement('div'); ph2.className='ph'; ph2.textContent='порожньо'; el.insertBefore(ph2, el.firstChild); }
+    else { ph.textContent = 'порожньо'; }
+    meta.textContent = '';
+    delBtn.disabled = true;
+  }
+}
+
+async function uploadSlot(n, file){
+  const st = document.querySelector('[data-st="' + n + '"]');
+  setStatus(st, 'Обробка й завантаження…', 'busy');
+  try {
+    const b64 = await resizeImageFile(file, 1600, 0.85);
+    const res = await ghPut('assets/gallery/' + n + '.jpg', b64, gallerySha[n], 'Адмінка: фото галереї #' + n);
+    const info = await ghGetBinaryInfo('assets/gallery/' + n + '.jpg');
+    renderSlot(n, info);
+    setStatus(st, 'Завантажено ✓', 'ok');
+  } catch (e) {
+    setStatus(st, 'Помилка: ' + e.message, 'err');
+  }
+}
+
+async function deleteSlot(n){
+  if (!confirm('Видалити фото #' + n + '?')) return;
+  const st = document.querySelector('[data-st="' + n + '"]');
+  setStatus(st, 'Видалення…', 'busy');
+  try {
+    await ghDelete('assets/gallery/' + n + '.jpg', gallerySha[n], 'Адмінка: видалено фото галереї #' + n);
+    renderSlot(n, null);
+    setStatus(st, 'Видалено ✓', 'ok');
+  } catch (e) {
+    setStatus(st, 'Помилка: ' + e.message, 'err');
+  }
+}
+
+// ---------- auth / boot ----------
+function showApp(){ gate.hidden = true; app.hidden = false; loadSite(); }
+function showGate(){ app.hidden = true; gate.hidden = false; }
+
+document.getElementById('btnSaveToken').addEventListener('click', async function(){
+  const val = document.getElementById('tokenInput').value.trim();
+  const st = document.getElementById('gateStatus');
+  if (!val) { setStatus(st, 'Встав токен', 'err'); return; }
+  setToken(val);
+  setStatus(st, 'Перевіряю…', 'busy');
+  try {
+    const res = await fetch(API, { headers: ghHeaders() });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    showApp();
+  } catch (e) {
+    setStatus(st, 'Токен не працює: ' + e.message, 'err');
+    clearToken();
+  }
+});
+
+document.getElementById('btnLogout').addEventListener('click', function(){
+  if (confirm('Вийти й видалити токен із цього браузера?')) { clearToken(); showGate(); }
+});
+document.getElementById('btnSaveAll').addEventListener('click', saveAll);
+document.getElementById('btnReload').addEventListener('click', loadSite);
+
+buildDynamicBlocks();
+if (getToken()) { showApp(); } else { showGate(); }
+
+})();
+</script>
+</body>
+</html>
