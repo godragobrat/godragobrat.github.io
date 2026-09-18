@@ -663,7 +663,9 @@
           <div>
             <span class="eyebrow">Драгобрат • Ясіня • Карпати</span>
             <h1 class="h-title" id="hero-title"><!--EDIT:hero_title-->Трансфер на Драгобрат <span class="accent">4×4</span> — швидко й надійно<!--/EDIT--></h1>
-            <p class="h-sub"><!--EDIT:hero_subtitle-->Організовуємо перевезення до Драгобрату (включно з 4×4 від Ясіні), підбираємо проживання й допомагаємо з відпочинком. Працюємо цілий рік: зима — лижі та сноуборд, літо — гори, трекінг, панорами.<!--/EDIT--></p>
+            <p class="h-sub"><!--EDIT:hero_subtitle-->Організовуємо перевезення до Драгобрату (включно з 4×4 від Ясіні), підбираємо
+              проживання й допомагаємо з відпочинком. Працюємо цілий рік: зима — лижі та сноуборд,
+              літо — гори, трекінг, панорами.<!--/EDIT--></p>
 
             <div class="trust">
               <span><b>✓</b> Швидке підтвердження</span>
@@ -925,6 +927,38 @@
                 <source src="assets/video/gory-tuman.mp4" type="video/mp4">
               </video>
               <div class="video-cap"><!--EDIT:video2_cap-->🏔 Гори в тумані — маршрут трекінгу<!--/EDIT--></div>
+            </div>
+          </div>
+          <div class="span6" data-video-slot="3">
+            <div class="video-frame">
+              <video controls playsinline preload="metadata" poster="assets/video/3.jpg">
+                <source src="assets/video/3.mp4" type="video/mp4">
+              </video>
+              <div class="video-cap"><!--EDIT:video3_cap-->Відео<!--/EDIT--></div>
+            </div>
+          </div>
+          <div class="span6" data-video-slot="4">
+            <div class="video-frame">
+              <video controls playsinline preload="metadata" poster="assets/video/4.jpg">
+                <source src="assets/video/4.mp4" type="video/mp4">
+              </video>
+              <div class="video-cap"><!--EDIT:video4_cap-->Відео<!--/EDIT--></div>
+            </div>
+          </div>
+          <div class="span6" data-video-slot="5">
+            <div class="video-frame">
+              <video controls playsinline preload="metadata" poster="assets/video/5.jpg">
+                <source src="assets/video/5.mp4" type="video/mp4">
+              </video>
+              <div class="video-cap"><!--EDIT:video5_cap-->Відео<!--/EDIT--></div>
+            </div>
+          </div>
+          <div class="span6" data-video-slot="6">
+            <div class="video-frame">
+              <video controls playsinline preload="metadata" poster="assets/video/6.jpg">
+                <source src="assets/video/6.mp4" type="video/mp4">
+              </video>
+              <div class="video-cap"><!--EDIT:video6_cap-->Відео<!--/EDIT--></div>
             </div>
           </div>
         </div>
@@ -1213,6 +1247,14 @@
       }
       return Promise.resolve(legacyCopy(s));
     }
+    /* --- Відео: ховаємо порожні слоти (ще не завантажені через адмінку) --- */
+    document.querySelectorAll('[data-video-slot] video').forEach(function (vid) {
+      vid.addEventListener('error', function () {
+        var slot = vid.closest('[data-video-slot]');
+        if (slot) slot.remove();
+      }, true);
+    });
+
     document.querySelectorAll('[data-send]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var msg = buildMsg();
