@@ -32,7 +32,7 @@ function captureFrame(videoBytes, seekTo){
 
 (async function(){
   try {
-    const resp = await fetch('/_prodtest.mp4');
+    const resp = await fetch('/prodtest.mp4');
     const blob = await resp.blob();
     const file = new File([blob], 'prodtest.mp4', {type:'video/mp4'});
 
