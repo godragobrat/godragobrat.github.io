@@ -78,6 +78,14 @@
   .status.ok{color:var(--ok)}
   .status.err{color:var(--err)}
   .status.busy{color:var(--gold-soft)}
+  .vcard{display:grid;grid-template-columns:160px 1fr;gap:14px;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;background:rgba(0,0,0,.15)}
+  .vcard:first-of-type{margin-top:0}
+  .vcard .vposter{width:160px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:#000;display:block}
+  .vcard .vposter.ph{display:grid;place-items:center;color:var(--faint);font-size:12px}
+  .vmeta{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+  .progressbar{height:8px;border-radius:999px;background:rgba(245,239,228,.1);overflow:hidden;margin-top:8px}
+  .progressbar > div{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));width:0%;transition:width .2s ease}
+  @media (max-width:520px){ .vcard{grid-template-columns:1fr} .vcard .vposter{width:100%}}
   .top-actions{position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5;border-bottom:1px solid var(--line);margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .top-actions .status{margin:0;flex:1 1 auto}
   a.link{color:var(--gold-soft)}
@@ -154,12 +162,9 @@
     </div>
 
     <div class="section">
-      <h2>🎥 Підписи під відео</h2>
-      <label for="f_video1_cap">Підпис до 1-го відео</label>
-      <input type="text" id="f_video1_cap">
-      <label for="f_video2_cap">Підпис до 2-го відео</label>
-      <input type="text" id="f_video2_cap">
-      <p class="hint">Заміна самих відеофайлів — окреме звернення (потребує стиснення для сайту).</p>
+      <h2>🎥 Відео</h2>
+      <p class="hint">Завантаж новий файл — стиснеться прямо в браузері під розмір сайту (перший раз довантажується інструмент стиснення, ~30 МБ, далі швидше). Це займає 1–3 хв, вкладку не закривай.</p>
+      <div id="videoBlock"></div>
     </div>
 
     <div class="section">
@@ -215,6 +220,24 @@ async function ghGetText(path){
   if (!res.ok) throw new Error('GET ' + path + ' -> ' + res.status);
   const data = await res.json();
   return { sha: data.sha, text: b64Decode(data.content.replace(/\s/g,'')) };
+}
+
+async function ghGetMeta(path){
+  const res = await fetch(API + '/contents/' + path + '?ref=' + BRANCH + '&t=' + Date.now(), { headers: ghHeaders() });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('GET ' + path + ' -> ' + res.status);
+  const data = await res.json();
+  const hasContent = data.content && data.encoding === 'base64';
+  return { sha: data.sha, size: data.size, base64: hasContent ? data.content.replace(/\s/g,'') : null };
+}
+
+function bytesToBase64(bytes){
+  let binary = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
 }
 
 async function ghGetBinaryInfo(path){
@@ -286,6 +309,10 @@ function replacePhone(html, oldDigits, newDigits){
 const PRICES = [1,2,3,4];
 const REVIEWS = [1,2,3];
 const FAQS = [1,2,3,4];
+const VIDEO_SLOTS = [
+  {key:'video1', video:'assets/video/4x4-marshrut.mp4', poster:'assets/video/4x4-marshrut.jpg', label:'Відео 1 — 4×4 на маршруті'},
+  {key:'video2', video:'assets/video/gory-tuman.mp4', poster:'assets/video/gory-tuman.jpg', label:'Відео 2 — гори в тумані'}
+];
 const SECTIONS = [
   {id:'transfer', label:'🚐 Перевезення'},
   {id:'stay', label:'🏡 Проживання'},
@@ -331,6 +358,21 @@ function buildDynamicBlocks(){
     return '<label class="toggle">' + s.label +
       '<span class="switch"><input type="checkbox" id="f_show_' + s.id + '"><span class="slider"></span></span>' +
       '</label>';
+  }).join('');
+
+  const v = document.getElementById('videoBlock');
+  v.innerHTML = VIDEO_SLOTS.map(function(s, idx){
+    const capId = 'f_video' + (idx+1) + '_cap';
+    return '<div class="vcard" id="vslot_' + s.key + '">' +
+      '<div class="vposter ph" data-poster>завантаження…</div>' +
+      '<div>' +
+        '<div class="vmeta" data-meta></div>' +
+        '<label>Підпис під відео</label><input type="text" id="' + capId + '">' +
+        '<label style="margin-top:10px">Замінити відеофайл</label>' +
+        '<label class="btn sm" style="display:inline-flex">Обрати файл<input type="file" accept="video/*" style="display:none" data-vslot="' + s.key + '"></label>' +
+        '<div class="progressbar" data-bar hidden><div></div></div>' +
+        '<div class="status" data-vst="' + s.key + '"></div>' +
+      '</div></div>';
   }).join('');
 }
 
@@ -424,6 +466,7 @@ async function loadSite(){
     fillFormFromHtml(currentHtml);
     setStatus(status, 'Дані завантажено ✓', 'ok');
     await loadGallery();
+    await loadVideoSlots();
   } catch (e) {
     setStatus(status, 'Помилка завантаження: ' + e.message, 'err');
   }
@@ -567,6 +610,88 @@ async function deleteSlot(n){
   }
 }
 
+// ---------- video ----------
+const videoMeta = {};
+
+async function loadVideoSlots(){
+  const results = await Promise.all(VIDEO_SLOTS.map(function(s){
+    return Promise.all([ghGetMeta(s.video).catch(function(){return null;}), ghGetBinaryInfo(s.poster).catch(function(){return null;})])
+      .then(function(r){ return {key:s.key, videoMeta:r[0], posterInfo:r[1]}; });
+  }));
+  results.forEach(function(r){ renderVideoSlot(r.key, r.videoMeta, r.posterInfo); });
+
+  document.querySelectorAll('input[data-vslot]').forEach(function(inp){
+    inp.addEventListener('change', function(){
+      if (inp.files && inp.files[0]) uploadVideoSlot(inp.dataset.vslot, inp.files[0]);
+      inp.value = '';
+    });
+  });
+}
+
+function renderVideoSlot(key, meta, posterInfo){
+  const el = document.getElementById('vslot_' + key);
+  if (!el) return;
+  videoMeta[key] = meta;
+  const posterEl = el.querySelector('[data-poster]');
+  const metaEl = el.querySelector('[data-meta]');
+  if (posterInfo && posterInfo.base64) {
+    let img = el.querySelector('img[data-poster]');
+    if (!img) {
+      img = document.createElement('img');
+      img.setAttribute('data-poster','');
+      img.className = 'vposter';
+      posterEl.replaceWith(img);
+    }
+    img.src = 'data:image/jpeg;base64,' + posterInfo.base64;
+  } else if (!el.querySelector('img[data-poster]')) {
+    posterEl.textContent = 'немає постера';
+  }
+  metaEl.textContent = meta ? ('Поточний розмір: ' + Math.round(meta.size/1024/1024*10)/10 + ' МБ') : 'файл не знайдено';
+}
+
+async function uploadVideoSlot(key, file){
+  const slotCfg = VIDEO_SLOTS.find(function(s){ return s.key === key; });
+  const st = document.querySelector('[data-vst="' + key + '"]');
+  const bar = document.querySelector('#vslot_' + key + ' [data-bar]');
+  const barInner = bar.querySelector('div');
+  bar.hidden = false; barInner.style.width = '0%';
+  setStatus(st, 'Завантажую інструмент стиснення… (лише перший раз)', 'busy');
+  try {
+    if (typeof window.__videoCompress !== 'function') {
+      await new Promise(function(resolve, reject){
+        let tries = 0;
+        const t = setInterval(function(){
+          tries++;
+          if (typeof window.__videoCompress === 'function') { clearInterval(t); resolve(); }
+          else if (tries > 200) { clearInterval(t); reject(new Error('Інструмент стиснення не завантажився. Онови сторінку.')); }
+        }, 150);
+      });
+    }
+    setStatus(st, 'Стиснення відео… це може зайняти 1–3 хв, не закривай вкладку', 'busy');
+    const onProgress = function(info){
+      if (info.type === 'progress' && typeof info.progress === 'number') {
+        const pct = Math.max(0, Math.min(100, Math.round(info.progress * 100)));
+        barInner.style.width = pct + '%';
+        setStatus(st, 'Стиснення відео… ' + pct + '%', 'busy');
+      }
+    };
+    const result = await window.__videoCompress(file, onProgress);
+    setStatus(st, 'Завантажую на сервер…', 'busy');
+    const freshVideoSha = (await ghGetMeta(slotCfg.video).catch(function(){return null;}));
+    const freshPosterSha = (await ghGetMeta(slotCfg.poster).catch(function(){return null;}));
+    await ghPut(slotCfg.video, bytesToBase64(result.videoBytes), freshVideoSha ? freshVideoSha.sha : null, 'Адмінка: нове відео ' + key);
+    await ghPut(slotCfg.poster, bytesToBase64(result.posterBytes), freshPosterSha ? freshPosterSha.sha : null, 'Адмінка: постер ' + key);
+    const newMeta = await ghGetMeta(slotCfg.video);
+    const newPoster = await ghGetBinaryInfo(slotCfg.poster);
+    renderVideoSlot(key, newMeta, newPoster);
+    bar.hidden = true;
+    setStatus(st, 'Готово ✓ Нове відео: ' + Math.round(result.videoBytes.length/1024/1024*10)/10 + ' МБ', 'ok');
+  } catch (e) {
+    bar.hidden = true;
+    setStatus(st, 'Помилка: ' + e.message, 'err');
+  }
+}
+
 // ---------- auth / boot ----------
 function showApp(){ gate.hidden = true; app.hidden = false; loadSite(); }
 function showGate(){ app.hidden = true; gate.hidden = false; }
@@ -597,6 +722,92 @@ buildDynamicBlocks();
 if (getToken()) { showApp(); } else { showGate(); }
 
 })();
+</script>
+
+<script type="module">
+import { FFmpeg } from './assets/vendor/ffmpeg/index.js';
+
+let ffmpegInstance = null;
+let loadingPromise = null;
+
+function fileToUint8Array(file){
+  return new Promise(function(resolve, reject){
+    const reader = new FileReader();
+    reader.onload = function(){ resolve(new Uint8Array(reader.result)); };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+function ensureLoaded(onProgress){
+  if (ffmpegInstance) return Promise.resolve(ffmpegInstance);
+  if (loadingPromise) return loadingPromise;
+  loadingPromise = (async function(){
+    const f = new FFmpeg();
+    f.on('progress', function(ev){ if (onProgress) onProgress({ type: 'progress', progress: ev.progress }); });
+    await f.load({
+      classWorkerURL: new URL('./assets/vendor/ffmpeg/worker.js', location.href).href,
+      coreURL: new URL('./assets/vendor/ffmpeg/core/ffmpeg-core.js', location.href).href,
+      wasmURL: new URL('./assets/vendor/ffmpeg/core/ffmpeg-core.wasm', location.href).href
+    });
+    ffmpegInstance = f;
+    return f;
+  })();
+  return loadingPromise;
+}
+
+// Poster кадр беремо не через ffmpeg (у цій wasm-збірці кодування в JPEG падає
+// з "memory access out of bounds"), а нативно через <video>+<canvas> браузера —
+// надійніше і простіше.
+function captureFrame(videoBytes, seekTo){
+  return new Promise(function(resolve, reject){
+    const blob = new Blob([videoBytes.buffer], { type: 'video/mp4' });
+    const url = URL.createObjectURL(blob);
+    const vid = document.createElement('video');
+    vid.muted = true; vid.playsInline = true; vid.preload = 'auto'; vid.src = url;
+    const cleanup = function(){ URL.revokeObjectURL(url); };
+    vid.addEventListener('loadedmetadata', function(){
+      vid.currentTime = Math.min(seekTo, (vid.duration || seekTo * 2) / 2);
+    });
+    vid.addEventListener('seeked', function(){
+      const canvas = document.createElement('canvas');
+      canvas.width = vid.videoWidth; canvas.height = vid.videoHeight;
+      canvas.getContext('2d').drawImage(vid, 0, 0);
+      canvas.toBlob(function(b){
+        cleanup();
+        if (!b) { reject(new Error('canvas.toBlob failed')); return; }
+        b.arrayBuffer().then(function(buf){ resolve(new Uint8Array(buf)); }, reject);
+      }, 'image/jpeg', 0.85);
+    });
+    vid.addEventListener('error', function(){ cleanup(); reject(new Error('не вдалось прочитати відео для постера')); });
+    setTimeout(function(){ cleanup(); reject(new Error('тайм-аут захоплення постера')); }, 15000);
+  });
+}
+
+window.__videoCompress = async function(file, onProgress){
+  const f = await ensureLoaded(onProgress);
+  const stamp = Date.now();
+  const inName = 'in_' + stamp;
+  const outName = 'out_' + stamp + '.mp4';
+
+  await f.writeFile(inName, await fileToUint8Array(file));
+  await f.exec([
+    '-i', inName,
+    '-vf', 'scale=960:-2',
+    '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '27',
+    '-c:a', 'aac', '-b:a', '96k',
+    '-movflags', '+faststart',
+    outName
+  ]);
+  const videoBytes = await f.readFile(outName);
+
+  try { await f.deleteFile(inName); } catch(e){}
+  try { await f.deleteFile(outName); } catch(e){}
+
+  const posterBytes = await captureFrame(videoBytes, 1);
+
+  return { videoBytes: videoBytes, posterBytes: posterBytes };
+};
 </script>
 </body>
 </html>
