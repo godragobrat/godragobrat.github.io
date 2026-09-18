@@ -1277,15 +1277,11 @@
       });
     });
 
-    /* --- Галерея: заглушки для відсутніх фото --- */
+    /* --- Галерея: приховуємо порожні місця (фото ще не завантажено) --- */
     document.querySelectorAll('#gallery-grid img').forEach(function (img) {
       function fail() {
-        var shot = img.closest('.shot');
-        var ph = document.createElement('div');
-        ph.className = 'ph';
-        ph.innerHTML = '<span class="big" aria-hidden="true">🏔</span><span>' +
-                       (img.getAttribute('alt') || 'Фото з’явиться згодом') + '</span>';
-        (shot || img).replaceWith(ph);
+        var tile = img.closest('figure') || img;
+        tile.remove();
       }
       if (img.complete && img.naturalWidth === 0) fail();
       else img.addEventListener('error', fail, { once: true });
