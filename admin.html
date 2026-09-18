@@ -311,7 +311,11 @@ const REVIEWS = [1,2,3];
 const FAQS = [1,2,3,4];
 const VIDEO_SLOTS = [
   {key:'video1', video:'assets/video/4x4-marshrut.mp4', poster:'assets/video/4x4-marshrut.jpg', label:'Відео 1 — 4×4 на маршруті'},
-  {key:'video2', video:'assets/video/gory-tuman.mp4', poster:'assets/video/gory-tuman.jpg', label:'Відео 2 — гори в тумані'}
+  {key:'video2', video:'assets/video/gory-tuman.mp4', poster:'assets/video/gory-tuman.jpg', label:'Відео 2 — гори в тумані'},
+  {key:'video3', video:'assets/video/3.mp4', poster:'assets/video/3.jpg', label:'Відео 3 (порожньо)'},
+  {key:'video4', video:'assets/video/4.mp4', poster:'assets/video/4.jpg', label:'Відео 4 (порожньо)'},
+  {key:'video5', video:'assets/video/5.mp4', poster:'assets/video/5.jpg', label:'Відео 5 (порожньо)'},
+  {key:'video6', video:'assets/video/6.mp4', poster:'assets/video/6.jpg', label:'Відео 6 (порожньо)'}
 ];
 const SECTIONS = [
   {id:'transfer', label:'🚐 Перевезення'},
@@ -407,8 +411,10 @@ function fillFormFromHtml(html){
       if (el) el.value = (extractField(html,'faq'+i+'_'+k)||'').trim();
     });
   });
-  document.getElementById('f_video1_cap').value = (extractField(html,'video1_cap')||'').trim();
-  document.getElementById('f_video2_cap').value = (extractField(html,'video2_cap')||'').trim();
+  VIDEO_SLOTS.forEach(function(s, idx){
+    const el = document.getElementById('f_video' + (idx+1) + '_cap');
+    if (el) el.value = (extractField(html, 'video' + (idx+1) + '_cap') || '').trim();
+  });
 
   SECTIONS.forEach(function(s){
     const el = document.getElementById('f_show_'+s.id);
@@ -444,8 +450,10 @@ function applyFormToHtml(html){
       if (el) html = replaceField(html, 'faq'+i+'_'+k, el.value);
     });
   });
-  html = replaceField(html, 'video1_cap', document.getElementById('f_video1_cap').value);
-  html = replaceField(html, 'video2_cap', document.getElementById('f_video2_cap').value);
+  VIDEO_SLOTS.forEach(function(s, idx){
+    const el = document.getElementById('f_video' + (idx+1) + '_cap');
+    if (el) html = replaceField(html, 'video' + (idx+1) + '_cap', el.value);
+  });
 
   SECTIONS.forEach(function(s){
     const el = document.getElementById('f_show_'+s.id);
